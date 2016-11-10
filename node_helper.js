@@ -1,5 +1,5 @@
 var NodeHelper = require('node_helper');
-var Curl = require('node-libcurl').Curl;
+var request = require('request');
 
 module.exports = NodeHelper.create({
 	start: function () {
@@ -8,14 +8,13 @@ module.exports = NodeHelper.create({
 
 	getWarningData: function (region) {
 		var self = this;
-		var curl = new Curl();
+		
 		var timestamp = Date.now().toString();
 		var url = 'http://www.dwd.de/DWD/warnungen/warnapp_landkreise/json/warnings.json?jsonp=loadWarnings' + timestamp;
 
-		curl.setOpt('URL', url);
-		curl.setOpt('FOLLOWLOCATION', true);
+		
 
-		curl.on('end', function (statusCode, body, headers) {
+		request({url: url, method: 'GET'}, function(error, response, body) {
 
 			var result = JSON.parse(body.substr(24).slice(0, -2));
 			for (var regionId in result['warnings']) {
@@ -30,11 +29,10 @@ module.exports = NodeHelper.create({
 					console.log(warnings);
 				}
 			}
-			this.close();
+			
 		});
 
-		curl.on('error', curl.close.bind(curl));
-		curl.perform();
+		
 	},
 
 	socketNotificationReceived: function (notification, payload) {
