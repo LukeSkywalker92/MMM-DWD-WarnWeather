@@ -48,6 +48,7 @@ Module.register("MMM-DWD-WarnWeather", {
 	// Override dom generator.
 	getDom: function () {
 		var wrapper = document.createElement("div");
+		wrapper.className = 'wrapper';
 		var title = document.createElement("div");
 		title.className = 'title';
 		title.innerHTML = this.config.title;
