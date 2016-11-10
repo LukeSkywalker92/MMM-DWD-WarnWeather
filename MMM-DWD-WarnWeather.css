@@ -1,3 +1,7 @@
+body {
+	background-color: black;
+}
+
 .sprite {
     background-image: url(icons/spritesheet.png);
     background-repeat: no-repeat;
@@ -5,50 +9,50 @@
 }
 
 .sprite-binnen {
-    width: 256px;
-    height: 256px;
+    width: 255px;
+    height: 255px;
     background-position: -5px -5px;
 }
 
 .sprite-frost {
-    width: 256px;
-    height: 256px;
+    width: 255px;
+    height: 255px;
     background-position: -271px -5px;
 }
 
 .sprite-gewitter {
-    width: 256px;
-    height: 256px;
+    width: 255px;
+    height: 255px;
     background-position: -537px -5px;
 }
 
 .sprite-glaette {
-    width: 256px;
-    height: 256px;
+    width: 255px;
+    height: 255px;
     background-position: -5px -271px;
 }
 
 .sprite-hitze {
-    width: 256px;
-    height: 256px;
+    width: 255px;
+    height: 255px;
     background-position: -271px -271px;
 }
 
 .sprite-nebel {
-    width: 256px;
-    height: 256px;
+    width: 255px;
+    height: 255px;
     background-position: -537px -271px;
 }
 
 .sprite-regen {
-    width: 256px;
-    height: 256px;
+    width: 255px;
+    height: 255px;
     background-position: -5px -537px;
 }
 
 .sprite-schnee {
-    width: 256px;
-    height: 256px;
+    width: 255px;
+    height: 255px;
     background-position: -271px -537px;
 }
 
@@ -74,4 +78,30 @@
     width: 256px;
     height: 256px;
     background-position: -803px -537px;
+}
+
+.red {
+	background-color: white;
+}
+
+.small-icon {
+	zoom: .25;
+}
+
+.description {
+	font-family: Roboto;
+	margin-left: 10px;
+	color: white;
+	width: 300px;
+	font-size: 20px;
+	line-height: 30px;
+
+}
+
+span {
+	float: left;
+}
+
+.black {
+	background-color: black
 }
