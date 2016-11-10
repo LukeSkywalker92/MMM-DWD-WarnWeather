@@ -1,107 +1,160 @@
-body {
-	background-color: black;
+.title {
+	color: #999;
+	width: 400px;
+	font-size: 25px;
+	line-height: 30px;
+	text-align: left;
 }
-
-.sprite {
-    background-image: url(icons/spritesheet.png);
-    background-repeat: no-repeat;
-    display: block;
+.status {
+	color: #666;
+	width: 400px;
+	font-size: 20px;
+	line-height: 25px;
+	text-align: left;
 }
-
-.sprite-binnen {
-    width: 255px;
-    height: 255px;
-    background-position: -5px -5px;
+.spritewhite {
+	background-image: url(icons/icons-white.png);
+	background-repeat: no-repeat;
+	display: block;
 }
-
+.sprite0 {
+	background-image: url(icons/icons-yellow.png);
+	background-repeat: no-repeat;
+	display: block;
+}
+.sprite1 {
+	background-image: url(icons/icons-yellow.png);
+	background-repeat: no-repeat;
+	display: block;
+}
+.sprite2 {
+	background-image: url(icons/icons-yellow.png);
+	background-repeat: no-repeat;
+	display: block;
+}
+.sprite3 {
+	background-image: url(icons/icons-orange.png);
+	background-repeat: no-repeat;
+	display: block;
+}
+.sprite4 {
+	background-image: url(icons/icons-red.png);
+	background-repeat: no-repeat;
+	display: block;
+}
+.sprite5 {
+	background-image: url(icons/icons-darkred.png);
+	background-repeat: no-repeat;
+	display: block;
+}
+.sprite10 {
+	background-image: url(icons/icons-violett.png);
+	background-repeat: no-repeat;
+	display: block;
+}
+.sprite20 {
+	background-image: url(icons/icons-violett.png);
+	background-repeat: no-repeat;
+	display: block;
+}
+.sprite-binnensee {
+	width: 256px;
+	height: 256px;
+	background-position: -5px -5px;
+}
 .sprite-frost {
-    width: 255px;
-    height: 255px;
-    background-position: -271px -5px;
+	width: 256px;
+	height: 256px;
+	background-position: -271px -5px;
 }
-
 .sprite-gewitter {
-    width: 255px;
-    height: 255px;
-    background-position: -537px -5px;
+	width: 256px;
+	height: 256px;
+	background-position: -537px -5px;
 }
-
-.sprite-glaette {
-    width: 255px;
-    height: 255px;
-    background-position: -5px -271px;
+.sprite-glatteis {
+	width: 256px;
+	height: 256px;
+	background-position: -5px -271px;
 }
-
 .sprite-hitze {
-    width: 255px;
-    height: 255px;
-    background-position: -271px -271px;
+	width: 256px;
+	height: 256px;
+	background-position: -271px -271px;
 }
-
 .sprite-nebel {
-    width: 255px;
-    height: 255px;
-    background-position: -537px -271px;
+	width: 256px;
+	height: 256px;
+	background-position: -537px -271px;
 }
-
 .sprite-regen {
-    width: 255px;
-    height: 255px;
-    background-position: -5px -537px;
+	width: 256px;
+	height: 256px;
+	background-position: -5px -537px;
 }
-
 .sprite-schnee {
-    width: 255px;
-    height: 255px;
-    background-position: -271px -537px;
+	width: 256px;
+	height: 256px;
+	background-position: -271px -537px;
 }
-
-.sprite-see {
-    width: 256px;
-    height: 256px;
-    background-position: -537px -537px;
+.sprite-sea {
+	width: 256px;
+	height: 256px;
+	background-position: -537px -537px;
 }
-
+.sprite-kueste {
+	width: 256px;
+	height: 256px;
+	background-position: -537px -537px;
+}
 .sprite-sturm {
-    width: 256px;
-    height: 256px;
-    background-position: -803px -5px;
+	width: 256px;
+	height: 256px;
+	background-position: -803px -5px;
 }
-
-.sprite-tau {
-    width: 256px;
-    height: 256px;
-    background-position: -803px -271px;
+.sprite-tauwetter {
+	width: 256px;
+	height: 256px;
+	background-position: -803px -271px;
 }
-
 .sprite-uv {
-    width: 256px;
-    height: 256px;
-    background-position: -803px -537px;
+	width: 256px;
+	height: 256px;
+	background-position: -803px -537px;
 }
-
-.red {
-	background-color: white;
+.warning {
+	margin-bottom: -40px
 }
-
 .small-icon {
-	zoom: .25;
+	zoom: .18;
+	float: left;
 }
-
 .description {
 	font-family: Roboto;
 	margin-left: 10px;
 	color: white;
-	width: 300px;
-	font-size: 20px;
-	line-height: 30px;
-
+	padding-left: 60px;
+	padding-top: 3px;
+	color: #fff;
+	width: 400px;
+	font-size: 15px;
+	line-height: 20px;
+	text-align: left;
 }
-
-span {
+.line {
+	width: auto;
+}
+hr {
+	margin-right: 400px;
 	float: left;
+	width: 300px;
 }
-
+.duration {
+	color: #999;
+}
+br {
+	height: 0px;
+}
 .black {
 	background-color: black
 }

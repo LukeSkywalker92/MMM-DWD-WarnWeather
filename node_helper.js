@@ -28,19 +28,8 @@ module.exports = NodeHelper.create({
 						self.sendSocketNotification('WARNINGS_DATA', warnings);
 					}
 					console.log(warnings);
-				} else {
-						self.sendSocketNotification('NO_WARNINGS', 'no_warnings');
-					}
+				}
 			}
-
-
-			console.info(statusCode);
-			console.info('---');
-			//console.info(body);
-			console.info('---');
-			console.info(this.getInfo('TOTAL_TIME'));
-
-
 			this.close();
 		});
 
@@ -52,9 +41,6 @@ module.exports = NodeHelper.create({
 		if (notification === 'GET_WARNINGS') {
 			this.getWarningData(payload);
 		}
-
-		console.log(notification);
-		console.log(payload);
 	}
 
 });

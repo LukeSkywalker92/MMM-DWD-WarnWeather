@@ -1,11 +1,34 @@
 {
   "name": "mmm-dwd-warnweather",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "description": "Displays weather-warnings from dwd for your region on MagicMirror2.",
   "main": "MMM-DWD-WarnWeather.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Luke",
-  "license": "ISC"
+  "license": "MIT",
+  "dependencies": {
+    "node-libcurl": "^1.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather.git"
+  },
+  "keywords": [
+    "magic",
+    "mirror",
+    "smart",
+    "mirror",
+    "weather",
+    "dwd",
+    "warnings",
+    "weather",
+    "warnings"
+  ],
+  "bugs": {
+    "url": "https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather/issues"
+  },
+  "homepage": "https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather#readme"
 }
