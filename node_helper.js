@@ -26,7 +26,6 @@ module.exports = NodeHelper.create({
 					if (warnings.length > 0) {
 						self.sendSocketNotification('WARNINGS_DATA', warnings);
 					}
-					console.log(warnings);
 				}
 			}
 			
