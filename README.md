@@ -44,7 +44,9 @@ Here is an example of an entry in `config.js`
 - [request](https://www.npmjs.com/package/request) (installed via `npm install`)
 
 ## Important Notes
-- This is my first project using Node, so feel free to submit pull requests or post on the issues/wiki and I will do my best to improve the project. Right now the data for warnings comes from the *Deutsche Wetterdienst*. So the warnings are only available for germany. If you find an similar API for other countries, feel free to give me a hint or to implement this API in this module yourself.
+- This is my first project using Node, so feel free to submit pull requests or post on the issues/wiki and I will do my best to improve the project.
+- Right now the data for warnings comes from the *Deutsche Wetterdienst*. So the warnings are only available for germany. If you find an similar API for other countries, feel free to give me a hint or to implement this API in this module yourself.
+- Because it's only data for germany, i did not translate any of the warnings to english. Also feel free to do that.
 
 ## Special Thanks
 - [Michael Teeuw](https://github.com/MichMich) for creating the awesome [MagicMirror2](https://github.com/MichMich/MagicMirror/tree/develop) project that made this module possible.
