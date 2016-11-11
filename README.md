@@ -2,13 +2,15 @@ MMM-DWD-WarnWeather
 ===================
 This a module for the [MagicMirror](https://github.com/MichMich/MagicMirror). It can display weather-warnings of [Deutscher Wetterdienst](http://www.dwd.de/DE/Home/home_node.html). The module shows you current weather-warnings of your region in Germany.
 
+## Preview
+
+![](https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather/blob/master/screenshot.png?raw=true)
+
 ## Installation
 1. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather.git`. A new folder will appear, navigate into it.
 2. Execute `npm install` to install the node dependencies.
 
-## Preview
 
-![](https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather/blob/master/screenshot.png?raw=true)
 
 ## Config
 The entry in `config.js` can include the following options:
@@ -46,6 +48,7 @@ Here is an example of an entry in `config.js`
 ## Important Notes
 - This is my first project using Node, so feel free to submit pull requests or post on the issues/wiki and I will do my best to improve the project.
 - Right now the data for warnings comes from the *Deutsche Wetterdienst*. So the warnings are only available for germany. If you find an similar API for other countries, feel free to give me a hint or to implement this API in this module yourself.
+
 - Because it's only data for germany, i did not translate any of the warnings to english. Also feel free to do that.
 
 ## Special Thanks
