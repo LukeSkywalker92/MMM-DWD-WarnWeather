@@ -2,8 +2,8 @@ Module.register("MMM-DWD-WarnWeather", {
 	// Default module config.
 	defaults: {
 		region: 'Kreis Lörrach',
-		interval: 10 * 60 * 1000, // every 10 minutes
 		changeColor: true,
+		interval: 10 * 60 * 1000, // every 10 minutes
 		title: 'Wetterwarnungen',
 		loadingText: 'Warnungen werden geladen...',
 		noWarningText: 'Keine Warnungen'
