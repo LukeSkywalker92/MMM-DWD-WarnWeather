@@ -50,7 +50,7 @@ Module.register("MMM-DWD-WarnWeather", {
 		var wrapper = document.createElement("div");
 		wrapper.className = 'wrapper';
 		var title = document.createElement("div");
-		title.className = 'title';
+		title.className = 'displaytitle';
 		title.innerHTML = this.config.title;
 		wrapper.appendChild(title);
 		var lineWrapper = document.createElement("div");
