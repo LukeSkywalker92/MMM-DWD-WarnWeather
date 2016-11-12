@@ -1,11 +1,14 @@
 .wrapper {
 }
 .displaytitle {
-	color: #999;
-	width: auto;
-	font-size: 25px;
-	line-height: 30px;
-	text-align: left;
+	text-transform: uppercase;
+font-size: 15px;
+font-family: Roboto Condensed;
+border-bottom: 1px solid #666;
+line-height: 15px;
+padding-bottom: 5px;
+margin-bottom: 10px;
+color: #999;
 }
 .status {
 	color: #666;

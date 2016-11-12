@@ -53,11 +53,6 @@ Module.register("MMM-DWD-WarnWeather", {
 		title.className = 'displaytitle';
 		title.innerHTML = this.config.title;
 		wrapper.appendChild(title);
-		var lineWrapper = document.createElement("div");
-		lineWrapper.className = 'line';
-		var line = document.createElement("hr");
-		lineWrapper.appendChild(line);
-		wrapper.appendChild(lineWrapper);
 
 		if (!this.loaded) {
 			var loading = document.createElement("p");
