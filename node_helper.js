@@ -1,3 +1,10 @@
+/* Magic Mirror
+ * Module: MMM-DWD-WarnWeather
+ *
+ * By Luke Scheffler https://github.com/LukeSkywalker92
+ * MIT Licensed.
+ */
+
 var NodeHelper = require('node_helper');
 var request = require('request');
 
@@ -8,13 +15,16 @@ module.exports = NodeHelper.create({
 
 	getWarningData: function (region) {
 		var self = this;
-		
+
 		var timestamp = Date.now().toString();
 		var url = 'http://www.dwd.de/DWD/warnungen/warnapp_landkreise/json/warnings.json?jsonp=loadWarnings' + timestamp;
 
-		
 
-		request({url: url, method: 'GET'}, function(error, response, body) {
+
+		request({
+			url: url,
+			method: 'GET'
+		}, function (error, response, body) {
 
 			var result = JSON.parse(body.substr(24).slice(0, -2));
 			var warningData = [];
@@ -30,10 +40,10 @@ module.exports = NodeHelper.create({
 				}
 			}
 			self.sendSocketNotification('WARNINGS_DATA', warningData);
-			
+
 		});
 
-		
+
 	},
 
 	socketNotificationReceived: function (notification, payload) {

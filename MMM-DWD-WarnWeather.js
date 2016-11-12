@@ -1,22 +1,31 @@
+/* global Module */
+
+/* Magic Mirror
+ * Module: MMM-DWD-WarnWeather
+ *
+ * By Luke Scheffler https://github.com/LukeSkywalker92
+ * MIT Licensed.
+ */
+
 Module.register("MMM-DWD-WarnWeather", {
 	// Default module config.
 	defaults: {
-		region: 'Kreis Lörrach',
+		region: '',
 		changeColor: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		title: 'Wetterwarnungen',
 		loadingText: 'Warnungen werden geladen...',
 		noWarningText: 'Keine Warnungen'
 	},
-
+	// Required scrpits
 	getScripts: function () {
 		return ["moment.js"];
 	},
-
+	// Required styles
 	getStyles: function () {
 		return ["MMM-DWD-WarnWeather.css"]
 	},
-
+	// Define parameters at start
 	start: function () {
 		this.loaded = false;
 		this.noWarnings = false;
@@ -40,6 +49,7 @@ Module.register("MMM-DWD-WarnWeather", {
 		this.updateWarnings(this);
 	},
 
+	// Make node_helper to get new warning-data
 	updateWarnings: function (self) {
 		self.sendSocketNotification('GET_WARNINGS', self.config.region);
 		setTimeout(self.updateWarnings, self.config.interval, self);
@@ -54,6 +64,7 @@ Module.register("MMM-DWD-WarnWeather", {
 		title.innerHTML = this.config.title;
 		wrapper.appendChild(title);
 
+		// Check if warning data was loadet
 		if (!this.loaded) {
 			var loading = document.createElement("p");
 			loading.className = 'status';
@@ -62,6 +73,7 @@ Module.register("MMM-DWD-WarnWeather", {
 			return wrapper;
 		}
 
+		// Check if there are warnings for defined region
 		if (this.warnings.length < 1) {
 			var noWarningWrapper = document.createElement("p");
 			noWarningWrapper.className = 'status';
@@ -71,7 +83,7 @@ Module.register("MMM-DWD-WarnWeather", {
 		}
 
 
-
+		// Display warnings
 		for (var i = 0; i < this.warnings.length; i++) {
 			var start = moment(this.warnings[i]['start']).format("DD.MM.YY, HH") + ' Uhr';
 			var end = moment(this.warnings[i]['end']).format("DD.MM.YY, HH") + ' Uhr';
