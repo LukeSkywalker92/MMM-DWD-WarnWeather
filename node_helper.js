@@ -17,6 +17,7 @@ module.exports = NodeHelper.create({
 		request({url: url, method: 'GET'}, function(error, response, body) {
 
 			var result = JSON.parse(body.substr(24).slice(0, -2));
+			var warningData = [];
 			for (var regionId in result['warnings']) {
 				if (result['warnings'][regionId][0]['regionName'] == region) {
 					var warnings = [];
@@ -24,10 +25,11 @@ module.exports = NodeHelper.create({
 						warnings.push(result['warnings'][regionId][warning]);
 					}
 					if (warnings.length > 0) {
-						self.sendSocketNotification('WARNINGS_DATA', warnings);
+						warningData = warnings;
 					}
 				}
 			}
+			self.sendSocketNotification('WARNINGS_DATA', warningData);
 			
 		});
 

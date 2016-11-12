@@ -2,14 +2,14 @@
 }
 .displaytitle {
 	color: #999;
-	width: 400px;
+	width: auto;
 	font-size: 25px;
 	line-height: 30px;
 	text-align: left;
 }
 .status {
 	color: #666;
-	width: 400px;
+	width: auto;
 	font-size: 20px;
 	line-height: 25px;
 	text-align: left;
@@ -138,7 +138,7 @@
 	padding-left: 60px;
 	padding-top: 3px;
 	color: #fff;
-	width: 300px;
+	width: auto;
 	font-size: 15px;
 	line-height: 20px;
 	text-align: left;
