@@ -1,5 +1,4 @@
 .wrapper {
-	width: 500px;
 }
 .displaytitle {
 	color: #999;
@@ -139,17 +138,17 @@
 	padding-left: 60px;
 	padding-top: 3px;
 	color: #fff;
-	width: 400px;
+	width: 300px;
 	font-size: 15px;
 	line-height: 20px;
 	text-align: left;
 }
 .line {
-	width: auto;
+	width: 300px;
+
+
 }
 hr {
-	margin-right: 400px;
-	float: left;
 	width: 300px;
 }
 .duration {
