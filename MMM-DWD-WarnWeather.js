@@ -85,8 +85,8 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		// Display warnings
 		for (var i = 0; i < this.warnings.length; i++) {
-			var start = moment(this.warnings[i]['start']).format("DD.MM.YY, HH") + ' Uhr';
-			var end = moment(this.warnings[i]['end']).format("DD.MM.YY, HH") + ' Uhr';
+			var start = moment(this.warnings[i]['start']).format("dd. HH") + ' Uhr';
+			var end = moment(this.warnings[i]['end']).format("dd. HH") + ' Uhr';
 			var level = this.warnings[i]['level'];
 			var type = this.warnings[i]['type'];
 			var event = this.warnings[i]['event'];
