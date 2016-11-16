@@ -20,7 +20,6 @@ The entry in `config.js` can include the following options:
 |`region`|Your region. Possible region names can be found [here](http://www.dwd.de/DE/wetter/warnungen_landkreise/warnWetter_node.html). Just click on your location and you will see the name.<br><br>**Type:** `string`<br>This value is **REQUIRED**|
 |`changeColor`|When `changeColor` is set to true, the color of the warning icons will change based on the warning level. <br><br>**Default value:** `true`|
 |`interval`|How often the warnings are updated.<br><br>**Default value:** `10 • 60 • 1000 // every 10 minutes|
-|`title`|The text, which is shown over the warnings as a title.<br><br>**Default value:** `'Wetterwarnungen'`|
 |`loadingText`|The text used while loading warnings.<br><br>**Default value:** `'Warnungen werden geladen...'`|
 |`noWarningText`|The text used when there are no warnings for your region.<br><br>**Default value:** `'Warnungen werden geladen...'`|
 
@@ -31,11 +30,11 @@ Here is an example of an entry in `config.js`
 {
 	module: 'MMM-DWD-WarnWeather',
 	position: 'top_left',
+	header: Wetterwarnungen,
 	config: {
 		region: 'Kreis Lörrach',
 		changeColor: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
-		title: 'Wetterwarnungen',
 		loadingText: 'Warnungen werden geladen...',
 		noWarningText: 'Keine Warnungen'
 	}
