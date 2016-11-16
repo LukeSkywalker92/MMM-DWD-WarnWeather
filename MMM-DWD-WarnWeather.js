@@ -59,10 +59,6 @@ Module.register("MMM-DWD-WarnWeather", {
 	getDom: function () {
 		var wrapper = document.createElement("div");
 		wrapper.className = 'wrapper';
-		var title = document.createElement("div");
-		title.className = 'displaytitle';
-		title.innerHTML = this.config.title;
-		wrapper.appendChild(title);
 
 		// Check if warning data was loadet
 		if (!this.loaded) {
@@ -90,6 +86,9 @@ Module.register("MMM-DWD-WarnWeather", {
 			var level = this.warnings[i]['level'];
 			var type = this.warnings[i]['type'];
 			var event = this.warnings[i]['event'];
+			if (this.warnings[i]['altitudeStart'] != null) {
+				event += ' (ab '+ this.warnings[i]['altitudeStart'].toString() + ' m)'
+			}
 			var warnWrapper = document.createElement("div");
 			warnWrapper.className = 'warning';
 			var icon = document.createElement("div");
@@ -120,14 +119,13 @@ Module.register("MMM-DWD-WarnWeather", {
 
 	socketNotificationReceived: function (notification, payload) {
 		Log.info(notification);
-		if (notification === 'WARNINGS_DATA') {
+		if (notification === 'WARNINGS_DATA' && payload['region'] == this.config.region) {
 			Log.info(payload);
-			this.warnings = payload;
-			//Log.info(this.warnings);
+			this.warnings = payload['warnings'];
 			this.loaded = true;
 			this.noWarnings = false;
 			this.updateDom(1000);
-		} else if (notification === 'NO_WARNINGS') {
+		} else if (notification === 'NO_WARNINGS' && payload['region'] == this.config.region) {
 			this.loaded = true;
 			this.noWarnings = true;
 			this.updateDom(1000);
