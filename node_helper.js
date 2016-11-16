@@ -39,7 +39,7 @@ module.exports = NodeHelper.create({
 					}
 				}
 			}
-			self.sendSocketNotification('WARNINGS_DATA', warningData);
+			self.sendSocketNotification('WARNINGS_DATA', {warnings: warningData, region: region});
 
 		});
 
