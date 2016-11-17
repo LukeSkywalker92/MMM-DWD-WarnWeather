@@ -30,7 +30,7 @@ Here is an example of an entry in `config.js`
 {
 	module: 'MMM-DWD-WarnWeather',
 	position: 'top_left',
-	header: Wetterwarnungen,
+	header: 'Wetterwarnungen',
 	config: {
 		region: 'Kreis Lörrach',
 		changeColor: true,
