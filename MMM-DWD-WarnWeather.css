@@ -1,14 +1,13 @@
-.wrapper {
-}
+.wrapper {}
 .displaytitle {
 	text-transform: uppercase;
-font-size: 15px;
-font-family: Roboto Condensed;
-border-bottom: 1px solid #666;
-line-height: 15px;
-padding-bottom: 5px;
-margin-bottom: 10px;
-color: #999;
+	font-size: 15px;
+	font-family: Roboto Condensed;
+	border-bottom: 1px solid #666;
+	line-height: 15px;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	color: #999;
 }
 .status {
 	color: #666;
@@ -131,8 +130,13 @@ color: #999;
 	margin-bottom: -40px
 }
 .small-icon {
-	zoom: .18;
 	float: left;
+	position: absolute;
+	zoom: .18;
+	-moz-transform: scale(.18);
+	/* Firefox */
+	-moz-transform-origin: 0 0;
+
 }
 .description {
 	font-family: Roboto;
@@ -148,8 +152,6 @@ color: #999;
 }
 .line {
 	width: 300px;
-
-
 }
 hr {
 	width: 300px;
