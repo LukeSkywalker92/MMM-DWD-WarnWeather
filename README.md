@@ -19,9 +19,10 @@ The entry in `config.js` can include the following options:
 |---|---|
 |`region`|Your region. Possible region names can be found [here](http://www.dwd.de/DE/wetter/warnungen_landkreise/warnWetter_node.html). Just click on your location and you will see the name.<br><br>**Type:** `string`<br>This value is **REQUIRED**|
 |`changeColor`|When `changeColor` is set to true, the color of the warning icons will change based on the warning level. <br><br>**Default value:** `true`|
-|`interval`|How often the warnings are updated.<br><br>**Default value:** `10 • 60 • 1000 // every 10 minutes|
+|`interval`|How often the warnings are updated.<br><br>**Default value:** `10 • 60 • 1000` // every 10 minutes|
+|`longversion`|Show the full Description of Warnings if true.<br><br>**Default value:** `false`|
 |`loadingText`|The text used while loading warnings.<br><br>**Default value:** `'Warnungen werden geladen...'`|
-|`noWarningText`|The text used when there are no warnings for your region.<br><br>**Default value:** `'Warnungen werden geladen...'`|
+|`noWarningText`|The text used when there are no warnings for your region.<br><br>**Default value:** `'Keine Warnungen'`|
 
 
 
