@@ -11,6 +11,7 @@ Module.register("MMM-DWD-WarnWeather", {
 	// Default module config.
 	defaults: {
 		region: '',
+		longversion: false,
 		changeColor: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		title: 'Wetterwarnungen',
@@ -85,7 +86,11 @@ Module.register("MMM-DWD-WarnWeather", {
 			var end = moment(this.warnings[i]['end']).format("dd. HH") + ' Uhr';
 			var level = this.warnings[i]['level'];
 			var type = this.warnings[i]['type'];
-			var event = this.warnings[i]['event'];
+			if (this.config.longversion) {
+				var event = this.warnings[i]['description'];
+			} else { 
+				var event = this.warnings[i]['event'];
+			}
 			if (this.warnings[i]['altitudeStart'] != null) {
 				event += ' (ab '+ this.warnings[i]['altitudeStart'].toString() + ' m)'
 			}
