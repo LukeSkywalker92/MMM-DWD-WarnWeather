@@ -12,6 +12,7 @@ Module.register("MMM-DWD-WarnWeather", {
 	defaults: {
 		region: '',
 		longversion: false,
+    width: 55,
 		changeColor: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		title: 'Wetterwarnungen',
@@ -87,7 +88,7 @@ Module.register("MMM-DWD-WarnWeather", {
 			var level = this.warnings[i]['level'];
 			var type = this.warnings[i]['type'];
 			if (this.config.longversion) {
-				var event = this.warnings[i]['description'];
+				var event = this.wordwrap(this.warnings[i]['description'], this.config.width, "<BR>");
 			} else { 
 				var event = this.warnings[i]['event'];
 			}
@@ -121,6 +122,21 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		return wrapper;
 	},
+     wordwrap: function (str, width, brk) { 
+
+         brk = brk || "n"; 
+         width = width || 75; 
+ 
+         if (!str) { 
+             return str; 
+         } 
+ 
+        var re = new RegExp(".{1," + width + 
+             "}(\\s|$)|\\ S+?(\\s|$)", "g"); 
+ 
+         return str.match(RegExp(re)).join(brk); 
+      }, 
+
 
 	socketNotificationReceived: function (notification, payload) {
 		Log.info(notification);
