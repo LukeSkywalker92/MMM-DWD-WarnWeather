@@ -21,6 +21,7 @@ The entry in `config.js` can include the following options:
 |`changeColor`|When `changeColor` is set to true, the color of the warning icons will change based on the warning level. <br><br>**Default value:** `true`|
 |`interval`|How often the warnings are updated.<br><br>**Default value:** `10 • 60 • 1000` // every 10 minutes|
 |`longversion`|Show the full Description of Warnings if true.<br><br>**Default value:** `false`|
+|`width`|set the piont, where the full Description break down.<br><br>**Default value:** `55`|
 |`loadingText`|The text used while loading warnings.<br><br>**Default value:** `'Warnungen werden geladen...'`|
 |`noWarningText`|The text used when there are no warnings for your region.<br><br>**Default value:** `'Keine Warnungen'`|
 
