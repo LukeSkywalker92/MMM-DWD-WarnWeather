@@ -16,27 +16,20 @@ module.exports = NodeHelper.create({
 	getWarningData: function (region) {
 		var self = this;
 
-		var timestamp = Date.now().toString();
-		var url = 'http://www.dwd.de/DWD/warnungen/warnapp_landkreise/json/warnings.json?jsonp=loadWarnings' + timestamp;
-
-
+		var regionFilter = encodeURIComponent("AREADESC='" + region + "'");
+		var url = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warnungen_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' + regionFilter;
 
 		request({
 			url: url,
 			method: 'GET'
 		}, function (error, response, body) {
 
-			var result = JSON.parse(body.substr(24).slice(0, -2));
+			var result = JSON.parse(body);
 			var warningData = [];
-			for (var regionId in result['warnings']) {
-				if (result['warnings'][regionId][0]['regionName'] == region) {
-					var warnings = [];
-					for (var warning in result['warnings'][regionId]) {
-						warnings.push(result['warnings'][regionId][warning]);
-					}
-					if (warnings.length > 0) {
-						warningData = warnings;
-					}
+
+			if (result.totalFeatures > 0) {
+				for (var i = 0; i < result.totalFeatures; i++) {
+					warningData.push(result.features[i].properties);
 				}
 			}
 			self.sendSocketNotification('WARNINGS_DATA', {warnings: warningData, region: region});
