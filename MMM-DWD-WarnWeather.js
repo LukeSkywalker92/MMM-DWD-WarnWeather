@@ -5,13 +5,6 @@
  *
  * By Luke Scheffler https://github.com/LukeSkywalker92
  * MIT Licensed.
- *
- * get region names here:
- * https://maps.dwd.de/geoserver/dwd/wms?service=WMS&version=1.1.0&request=GetMap&layers=dwd:Warngebiete_Gemeinden&styles=&bbox=5.876914,47.270362,15.037507,55.044381&width=1024&height=868&srs=EPSG:4326&format=application/openlayers#
- * - toggle options toolbar (three dots at the top left)
- * - if necessary enter "NAME LIKE '%<your place name>%'" at the top right next to the 'CQL' dropdown
- * - click on your city/town/community/area...
- * - the correct region name is DWD_NAME from the table below the map (case sensitive!)
  */
 
 Module.register("MMM-DWD-WarnWeather", {
