@@ -62,7 +62,7 @@ Module.register("MMM-DWD-WarnWeather", {
 	// Override dom generator.
 	getDom: function () {
 		var wrapper = document.createElement("div");
-		wrapper.className = 'wrapper'
+		wrapper.className = 'wrapper';
 
 		var header = document.createElement("header");
 		header.innerHTML = 'Wetterwarnungen';
@@ -96,7 +96,7 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		// Display warnings
 		for (var i = 0; i < this.warnings.length; i++) {
-			timeDisplayFormat = this.config.minutes ? "dd. HH:mm" : "dd. HH"
+			timeDisplayFormat = this.config.minutes ? "dd. HH:mm" : "dd. HH";
 			var start = moment(this.warnings[i].ONSET).format(timeDisplayFormat) + ' Uhr';
 			var end = moment(this.warnings[i].EXPIRES).format(timeDisplayFormat) + ' Uhr';
 			var type = this.warnings[i].EC_GROUP.split(';')[0];
