@@ -15,7 +15,7 @@ Module.register("MMM-DWD-WarnWeather", {
 		minutes: true,
 		displayRegionName: true,
 		longRegionName: false,
-    width: 55,
+    		width: 55,
 		changeColor: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		loadingText: 'Warnungen werden geladen...',
