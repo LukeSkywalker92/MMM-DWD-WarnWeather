@@ -17,13 +17,13 @@ The entry in `config.js` can include the following options:
 
 |Option|Description|
 |---|---|
-|`region`|now using the new more detailed DWD API.<br><br>How to find the correct region name:<br>
-- go [here](https://maps.dwd.de/geoserver/dwd/wms?service=WMS&version=1.1.0&request=GetMap&layers=dwd:Warngebiete_Gemeinden&styles=&bbox=5.876914,47.270362,15.037507,55.044381&width=1024&height=868&srs=EPSG:4326&format=application/openlayers#)<br>
-- toggle options toolbar (three dots at the top left)<br>
-- if necessary enter "NAME LIKE '%&lt;your region name&gt;%'" at the top right next to the 'CQL' dropdown<br>
-- optional: change style in dropdown from "Default" to "Warngebiete_Gemeinden_Text" for easier selection
-- click on your city/town/community/area...<br>
-- the correct region name is DWD_NAME from the table below the map (case sensitive!)<br>**Type:** `string`<br>This value is **REQUIRED**|
+|`region`|now using the new more detailed community based DWD API.<br><br>How to find the correct region name:<br>
+<ul><li>go [here](https://maps.dwd.de/geoserver/dwd/wms?service=WMS&version=1.1.0&request=GetMap&layers=dwd:Warngebiete_Gemeinden&styles=&bbox=5.876914,47.270362,15.037507,55.044381&width=1024&height=868&srs=EPSG:4326&format=application/openlayers#)</li>
+<li>toggle options toolbar (three dots at the top left)</li>
+<li>if necessary enter "NAME LIKE '%&lt;your region name&gt;%'" at the top right next to the 'CQL' dropdown<br></li>
+<li>optional: change style in dropdown from "Default" to "Warngebiete_Gemeinden_Text" for easier selection</li>
+<li>click on your city/town/community/area...</li>
+<li>the correct region name is DWD_NAME from the table below the map (case sensitive!)</li></ul><br>**Type:** `string`<br>This value is **REQUIRED**|
 |`changeColor`|When `changeColor` is set to true, the color of the warning icons will change based on the warning level. <br><br>**Default value:** `true`|
 |`interval`|How often the warnings are updated.<br><br>**Default value:** `10 • 60 • 1000` // every 10 minutes|
 |`longversion`|Show the full Description of Warnings if true.<br><br>**Default value:** `false`|
