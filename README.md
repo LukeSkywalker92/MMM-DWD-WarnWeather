@@ -17,14 +17,15 @@ The entry in `config.js` can include the following options:
 
 |Option|Description|
 |---|---|
-|`region`|now using the new more detailed DWD API.<br><br>To find the correct region name:<br><ul><li>go [here](https://maps.dwd.de/geoserver/dwd/wms?service=WMS&version=1.1.0&request=GetMap&layers=dwd:Warngebiete_Gemeinden&styles=&bbox=5.876914,47.270362,15.037507,55.044381&width=1024&height=868&srs=EPSG:4326&format=application/openlayers#)</li><li>toggle options toolbar (three dots at the top left)</li><li>if necessary enter "NAME LIKE '%&lt;your region name&gt;%'" at the top right next to the 'CQL' dropdown</li><li>optional: change style in dropdown from "Default" to "Warngebiete_Gemeinden_Text" for easier selection</li><li>click on your city/town/community/area...</li><li>the correct region name is DWD_NAME from the table below the map (case sensitive!)</li></ul><br>**Type:** `string`<br>This value is **REQUIRED**|
+|`region`|now using the new more detailed DWD API.<br><br>To find the correct region name:<br><ul><li>go [here](https://maps.dwd.de/geoserver/dwd/wms?service=WMS&version=1.1.0&request=GetMap&layers=dwd:Warngebiete_Gemeinden&styles=&bbox=5.876914,47.270362,15.037507,55.044381&width=1024&height=868&srs=EPSG:4326&format=application/openlayers#)</li><li>toggle options toolbar (three dots at the top left)</li><li>if necessary enter "NAME LIKE '%&lt;your region name&gt;%'" at the top right next to the 'CQL' dropdown</li><li>optional: change style in dropdown from "Default" to "Warngebiete_Gemeinden_Text" for easier selection</li><li>click on your city/town/community/area...</li><li>the correct region name is DWD_NAME from the table below the map (case sensitive!)</li></ul><br>**Type:** `string`<br>Use **either** this **or** `lat` and `lng`.|
+|`lat`|Latitude of the place to check.<br><br>Use **either** this and `lng` **or** `region`.|
+|`lng`|Longitude of the place to check.<br><br>Use **either** this and `lat` **or** `region`.|
 |`changeColor`|When `changeColor` is set to true, the color of the warning icons will change based on the warning level. <br><br>**Default value:** `true`|
 |`interval`|How often the warnings are updated.<br><br>**Default value:** `10 • 60 • 1000` // every 10 minutes|
 |`longversion`|Show the full Description of Warnings if true.<br><br>**Default value:** `false`|
 |`width`|set the piont, where the full Description break down.<br><br>**Default value:** `55`|
 |`minutes`|show minutes in start ad end time information<br><br>**Default value:** `true`|
 |`displayRegionName`|show region name in header info<br><br>**Default value:** `true`|
-|`longRegionName`|show long region name instead of short DWD_NAME<br><br>**Default value:** `false`|
 |`loadingText`|The text used while loading warnings.<br><br>**Default value:** `'Warnungen werden geladen...'`|
 |`noWarningText`|The text used when there are no warnings for your region.<br><br>**Default value:** `'Keine Warnungen'`|
 
@@ -40,7 +41,6 @@ Here is an example of an entry in `config.js`
 		changeColor: true,
 		minutes: false,
 		displayRegionName: true,
-		longRegionName: false,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		loadingText: 'Warnungen werden geladen...',
 		noWarningText: 'Keine Warnungen'

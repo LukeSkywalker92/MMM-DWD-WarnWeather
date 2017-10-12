@@ -8,14 +8,14 @@
  */
 
 Module.register("MMM-DWD-WarnWeather", {
+
 	// Default module config.
 	defaults: {
 		region: '',
 		longversion: false,
 		minutes: true,
 		displayRegionName: true,
-		longRegionName: false,
-    		width: 55,
+		width: 55,
 		changeColor: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		loadingText: 'Warnungen werden geladen...',
@@ -34,6 +34,7 @@ Module.register("MMM-DWD-WarnWeather", {
 		this.loaded = false;
 		this.noWarnings = false;
 		this.warnings = [];
+		this.community = [];
 		this.icons = {
 			THUNDERSTORM: 'sprite-gewitter',
 			WIND:         'sprite-sturm',
@@ -55,7 +56,13 @@ Module.register("MMM-DWD-WarnWeather", {
 
 	// Make node_helper to get new warning-data
 	updateWarnings: function (self) {
-		self.sendSocketNotification('GET_WARNINGS', self.config.region);
+		if (self.config.region) {
+		  self.sendSocketNotification('GET_WARNINGS', self.config.region);
+	  }
+		else if (self.config.lat && self.config.lng) {
+			var coords = {lat:self.config.lat, lng:self.config.lng};
+			self.sendSocketNotification('GET_WARNINGS', coords);
+		}
 		setTimeout(self.updateWarnings, self.config.interval, self);
 	},
 
@@ -66,13 +73,8 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		var header = document.createElement("header");
 		header.innerHTML = 'Wetterwarnungen';
-		if (this.config.displayRegionName) {
-			if (this.warnings.length > 0 && this.config.longRegionName) {
-				header.innerHTML += ' für:<br>' + this.warnings[0].NAME;
-			}
-			else {
-				header.innerHTML += ' für ' + this.config.region;
-			}
+		if (this.config.displayRegionName && this.loaded) {
+			header.innerHTML += ' für:<br>' + this.community.properties.NAME;
 		}
 		wrapper.appendChild(header);
 
@@ -97,19 +99,19 @@ Module.register("MMM-DWD-WarnWeather", {
 		// Display warnings
 		for (var i = 0; i < this.warnings.length; i++) {
 			timeDisplayFormat = this.config.minutes ? "dd. HH:mm" : "dd. HH";
-			var start = moment(this.warnings[i].ONSET).format(timeDisplayFormat) + ' Uhr';
-			var end = moment(this.warnings[i].EXPIRES).format(timeDisplayFormat) + ' Uhr';
-			var type = this.warnings[i].EC_GROUP.split(';')[0];
+			var start = moment(this.warnings[i].properties.ONSET).format(timeDisplayFormat) + ' Uhr';
+			var end = moment(this.warnings[i].properties.EXPIRES).format(timeDisplayFormat) + ' Uhr';
+			var type = this.warnings[i].properties.EC_GROUP.split(';')[0];
 			if (this.config.longversion) {
-				var event = this.wordwrap(this.warnings[i].DESCRIPTION, this.config.width, "<BR>");
+				var event = this.wordwrap(this.warnings[i].properties.DESCRIPTION, this.config.width, "<BR>");
 			} else {
-				var event = this.warnings[i].EVENT;
+				var event = this.warnings[i].properties.EVENT;
 			}
 			var warnWrapper = document.createElement("div");
 			warnWrapper.className = 'warning';
 			var icon = document.createElement("div");
 			if (this.config.changeColor) {
-				iconColor = this.warnings[i].EC_AREA_COLOR.replace(/ /g, ',');
+				iconColor = this.warnings[i].properties.EC_AREA_COLOR.replace(/ /g, ',');
 				icon.setAttribute('style', 'background-color: rgb(' + iconColor + ')');
 				icon.classList.add('weathericon', this.icons[type], 'small-icon');
 			} else {
@@ -135,34 +137,53 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		return wrapper;
 	},
-     wordwrap: function (str, width, brk) {
 
-         brk = brk || "n";
-         width = width || 75;
+	wordwrap: function (str, width, brk) {
 
-         if (!str) {
-             return str;
-         }
+		brk = brk || "n";
+		width = width || 75;
 
-        var re = new RegExp(".{1," + width +
-             "}(\\s|$)|\\ S+?(\\s|$)", "g");
+		if (!str) {
+		  return str;
+		}
 
-         return str.match(RegExp(re)).join(brk);
-      },
+		var re = new RegExp(".{1," + width +
+		     "}(\\s|$)|\\ S+?(\\s|$)", "g");
 
+	  return str.match(RegExp(re)).join(brk);
+	},
+
+	pointInPoly: function (point, vs) {
+    // ray-casting algorithm based on
+    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+    var x = point[0], y = point[1];
+
+    var inside = false;
+    for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+      var xi = vs[i][0], yi = vs[i][1];
+      var xj = vs[j][0], yj = vs[j][1];
+
+      var intersect = ((yi > y) != (yj > y))
+          && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+      if (intersect) inside = !inside;
+    }
+
+    return inside;
+	},
 
 	socketNotificationReceived: function (notification, payload) {
 		Log.info(notification);
-		if (notification === 'WARNINGS_DATA' && payload.region == this.config.region) {
-			Log.info(payload);
-			this.warnings = payload.warnings;
-			this.loaded = true;
-			this.noWarnings = false;
-			this.updateDom(1000);
-		} else if (notification === 'NO_WARNINGS' && payload.region == this.config.region) {
-			this.loaded = true;
-			this.noWarnings = true;
-			this.updateDom(1000);
+
+		if (notification === 'WARNINGS_DATA') {
+			if (payload.region == this.config.region || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])){
+				Log.info(payload);
+				this.warnings = payload.warnings;
+				this.community = payload.community;
+				this.loaded = true;
+				this.noWarnings = false;
+				this.updateDom(1000);
+			}
 		}
 	}
 });
