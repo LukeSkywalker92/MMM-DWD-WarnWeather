@@ -13,7 +13,11 @@ module.exports = NodeHelper.create({
 		console.log('MMM-DWD-WarnWeather helper started...')
 	},
 
-	getWarningData: function (region) {
+	dataLoadingComplete: function (self, warningData, region, communityData){
+		self.sendSocketNotification('WARNINGS_DATA', {warnings: warningData, region: region, community: communityData});
+	},
+
+	getWarningData: function (region, callback) {
 		var self = this;
 
 		if (region.lng) {
@@ -22,10 +26,15 @@ module.exports = NodeHelper.create({
     else {
 		  var regionFilter = encodeURIComponent("AREADESC='" + region + "'");
     }
+
 		var communityData = [];
+		var warningData = [];
+
 		var nameurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warngebiete_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' +
 					(regionFilter.includes("AREADESC")?regionFilter.replace("AREADESC", "DWD_NAME"):regionFilter);
 		var warnurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warnungen_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' + regionFilter;
+
+		var requests = 2;
 
 		//get name
 		request({
@@ -33,9 +42,11 @@ module.exports = NodeHelper.create({
 			method: 'GET'
 		}, function (error, response, body) {
 			var result = JSON.parse(body);
-
 			if (result.totalFeatures == 1) {
 				communityData = result.features[0];
+			}
+			if(--requests == 0) {
+				callback(self, warningData, region, communityData);
 			}
 		});
 
@@ -46,20 +57,21 @@ module.exports = NodeHelper.create({
 		}, function (error, response, body) {
 
 			var result = JSON.parse(body);
-			var warningData = [];
 
 			if (result.totalFeatures > 0) {
 				for (var i = 0; i < result.totalFeatures; i++) {
 					warningData.push(result.features[i]);
 				}
 			}
-			self.sendSocketNotification('WARNINGS_DATA', {warnings: warningData, region: region, community: communityData});
+			if(--requests == 0) {
+				callback(self, warningData, region, communityData);
+			}
 		});
 	},
 
 	socketNotificationReceived: function (notification, payload) {
     if (notification === 'GET_WARNINGS') {
-			this.getWarningData(payload);
+			this.getWarningData(payload, this.dataLoadingComplete);
 		}
 	}
 

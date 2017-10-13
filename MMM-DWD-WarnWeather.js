@@ -72,9 +72,13 @@ Module.register("MMM-DWD-WarnWeather", {
 		wrapper.className = 'wrapper';
 
 		var header = document.createElement("header");
-		header.innerHTML = 'Wetterwarnungen';
-		if (this.config.displayRegionName && this.loaded) {
-			header.innerHTML += ' für:<br>' + this.community.properties.NAME;
+		if (this.community.hasOwnProperty('properties')){
+			header.innerHTML = 'Wetterwarnungen';
+			if (this.config.displayRegionName && this.loaded) {
+				header.innerHTML += ' für:<br>' + this.community.properties.NAME;
+			}
+		} else {
+			header.innerHTML = 'Ort nicht gefunden';
 		}
 		wrapper.appendChild(header);
 
@@ -176,13 +180,15 @@ Module.register("MMM-DWD-WarnWeather", {
 		Log.info(notification);
 
 		if (notification === 'WARNINGS_DATA') {
-			if (payload.region == this.config.region || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])){
-				Log.info(payload);
-				this.warnings = payload.warnings;
-				this.community = payload.community;
-				this.loaded = true;
-				this.noWarnings = false;
-				this.updateDom(1000);
+			if(payload.community.hasOwnProperty('geometry')){
+				if (payload.region == this.config.region || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])){
+					Log.info(payload);
+					this.warnings = payload.warnings;
+					this.community = payload.community;
+					this.loaded = true;
+					this.noWarnings = false;
+					this.updateDom(1000);
+				}
 			}
 		}
 	}
