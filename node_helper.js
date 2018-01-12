@@ -13,42 +13,65 @@ module.exports = NodeHelper.create({
 		console.log('MMM-DWD-WarnWeather helper started...')
 	},
 
-	getWarningData: function (region) {
+	dataLoadingComplete: function (self, warningData, region, communityData){
+		self.sendSocketNotification('WARNINGS_DATA', {warnings: warningData, region: region, community: communityData});
+	},
+
+	getWarningData: function (region, callback) {
 		var self = this;
 
-		var timestamp = Date.now().toString();
-		var url = 'http://www.dwd.de/DWD/warnungen/warnapp_landkreise/json/warnings.json?jsonp=loadWarnings' + timestamp;
+		if (region.lng) {
+			var regionFilter = encodeURIComponent("CONTAINS(THE_GEOM, POINT(" + region.lng + " " + region.lat + "))");
+		}
+    else {
+		  var regionFilter = encodeURIComponent("AREADESC='" + region + "'");
+    }
 
+		var communityData = [];
+		var warningData = [];
 
+		var nameurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warngebiete_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' +
+					(regionFilter.includes("AREADESC")?regionFilter.replace("AREADESC", "DWD_NAME"):regionFilter);
+		var warnurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warnungen_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' + regionFilter;
 
+		var requests = 2;
+
+		//get name
 		request({
-			url: url,
+			url: nameurl,
+			method: 'GET'
+		}, function (error, response, body) {
+			var result = JSON.parse(body);
+			if (result.totalFeatures == 1) {
+				communityData = result.features[0];
+			}
+			if(--requests == 0) {
+				callback(self, warningData, region, communityData);
+			}
+		});
+
+		//get warnings
+		request({
+			url: warnurl,
 			method: 'GET'
 		}, function (error, response, body) {
 
-			var result = JSON.parse(body.substr(24).slice(0, -2));
-			var warningData = [];
-			for (var regionId in result['warnings']) {
-				if (result['warnings'][regionId][0]['regionName'] == region) {
-					var warnings = [];
-					for (var warning in result['warnings'][regionId]) {
-						warnings.push(result['warnings'][regionId][warning]);
-					}
-					if (warnings.length > 0) {
-						warningData = warnings;
-					}
+			var result = JSON.parse(body);
+
+			if (result.totalFeatures > 0) {
+				for (var i = 0; i < result.totalFeatures; i++) {
+					warningData.push(result.features[i]);
 				}
 			}
-			self.sendSocketNotification('WARNINGS_DATA', {warnings: warningData, region: region});
-
+			if(--requests == 0) {
+				callback(self, warningData, region, communityData);
+			}
 		});
-
-
 	},
 
 	socketNotificationReceived: function (notification, payload) {
-		if (notification === 'GET_WARNINGS') {
-			this.getWarningData(payload);
+    if (notification === 'GET_WARNINGS') {
+			this.getWarningData(payload, this.dataLoadingComplete);
 		}
 	}
 

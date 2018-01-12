@@ -8,14 +8,16 @@
  */
 
 Module.register("MMM-DWD-WarnWeather", {
+
 	// Default module config.
 	defaults: {
 		region: '',
 		longversion: false,
-    width: 55,
+		minutes: true,
+		displayRegionName: true,
+		width: 55,
 		changeColor: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
-		title: 'Wetterwarnungen',
 		loadingText: 'Warnungen werden geladen...',
 		noWarningText: 'Keine Warnungen'
 	},
@@ -32,28 +34,35 @@ Module.register("MMM-DWD-WarnWeather", {
 		this.loaded = false;
 		this.noWarnings = false;
 		this.warnings = [];
-		this.icons = [
-			'sprite-gewitter',
-			'sprite-sturm',
-			'sprite-regen',
-			'sprite-schnee',
-			'sprite-nebel',
-			'sprite-frost',
-			'sprite-glatteis',
-			'sprite-tauwetter',
-			'sprite-hitze',
-			'sprite-uv',
-			'sprite-kueste',
-			'sprite-binnensee',
-			'sprite-sea'
+		this.community = [];
+		this.icons = {
+			THUNDERSTORM: 'sprite-gewitter',
+			WIND:         'sprite-sturm',
+			TORNADO:      'sprite-sturm',
+			RAIN:         'sprite-regen',
+			HAIL:         'sprite-schnee',
+			SNOWFALL:     'sprite-schnee',
+			SNOWDRIFT:    'sprite-schnee',
+			FOG:          'sprite-nebel',
+			FROST:        'sprite-frost',
+			GLAZE:        'sprite-glatteis',
+			THAW:         'sprite-tauwetter',
+			HEAT:         'sprite-hitze',
+			UV:           'sprite-uv'
+		}
 
-		]
 		this.updateWarnings(this);
 	},
 
 	// Make node_helper to get new warning-data
 	updateWarnings: function (self) {
-		self.sendSocketNotification('GET_WARNINGS', self.config.region);
+		if (self.config.region) {
+		  self.sendSocketNotification('GET_WARNINGS', self.config.region);
+	  }
+		else if (self.config.lat && self.config.lng) {
+			var coords = {lat:self.config.lat, lng:self.config.lng};
+			self.sendSocketNotification('GET_WARNINGS', coords);
+		}
 		setTimeout(self.updateWarnings, self.config.interval, self);
 	},
 
@@ -62,7 +71,18 @@ Module.register("MMM-DWD-WarnWeather", {
 		var wrapper = document.createElement("div");
 		wrapper.className = 'wrapper';
 
-		// Check if warning data was loadet
+		var header = document.createElement("header");
+		if (this.community.hasOwnProperty('properties')){
+			header.innerHTML = 'Wetterwarnungen';
+			if (this.config.displayRegionName && this.loaded) {
+				header.innerHTML += ' für:<br>' + this.community.properties.NAME;
+			}
+		} else {
+			header.innerHTML = 'Ort nicht gefunden';
+		}
+		wrapper.appendChild(header);
+
+		// Check if warning data was loaded
 		if (!this.loaded) {
 			var loading = document.createElement("p");
 			loading.className = 'status';
@@ -80,28 +100,27 @@ Module.register("MMM-DWD-WarnWeather", {
 			return wrapper;
 		}
 
-
 		// Display warnings
 		for (var i = 0; i < this.warnings.length; i++) {
-			var start = moment(this.warnings[i]['start']).format("dd. HH") + ' Uhr';
-			var end = moment(this.warnings[i]['end']).format("dd. HH") + ' Uhr';
-			var level = this.warnings[i]['level'];
-			var type = this.warnings[i]['type'];
+			timeDisplayFormat = this.config.minutes ? "dd. HH:mm" : "dd. HH";
+			var start = moment(this.warnings[i].properties.ONSET).format(timeDisplayFormat) + ' Uhr';
+			var end = moment(this.warnings[i].properties.EXPIRES).format(timeDisplayFormat) + ' Uhr';
+			var type = this.warnings[i].properties.EC_GROUP.split(';')[0];
 			if (this.config.longversion) {
-				var event = this.wordwrap(this.warnings[i]['description'], this.config.width, "<BR>");
-			} else { 
-				var event = this.warnings[i]['event'];
-			}
-			if (this.warnings[i]['altitudeStart'] != null) {
-				event += ' (ab '+ this.warnings[i]['altitudeStart'].toString() + ' m)'
+				var event = this.wordwrap(this.warnings[i].properties.DESCRIPTION, this.config.width, "<BR>");
+			} else {
+				var event = this.warnings[i].properties.EVENT;
 			}
 			var warnWrapper = document.createElement("div");
 			warnWrapper.className = 'warning';
 			var icon = document.createElement("div");
 			if (this.config.changeColor) {
-				icon.classList.add('sprite' + level, this.icons[type], 'small-icon');
+				iconColor = this.warnings[i].properties.EC_AREA_COLOR.replace(/ /g, ',');
+				icon.setAttribute('style', 'background-color: rgb(' + iconColor + ')');
+				icon.classList.add('weathericon', this.icons[type], 'small-icon');
 			} else {
-				icon.classList.add('spritewhite', this.icons[type], 'small-icon');
+				icon.setAttribute('style', 'background-color: white');
+				icon.classList.add('weathericon', this.icons[type], 'small-icon');
 			}
 			var description = document.createElement("div");
 			description.className = 'description';
@@ -122,34 +141,55 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		return wrapper;
 	},
-     wordwrap: function (str, width, brk) { 
 
-         brk = brk || "n"; 
-         width = width || 75; 
- 
-         if (!str) { 
-             return str; 
-         } 
- 
-        var re = new RegExp(".{1," + width + 
-             "}(\\s|$)|\\ S+?(\\s|$)", "g"); 
- 
-         return str.match(RegExp(re)).join(brk); 
-      }, 
+	wordwrap: function (str, width, brk) {
 
+		brk = brk || "n";
+		width = width || 75;
+
+		if (!str) {
+		  return str;
+		}
+
+		var re = new RegExp(".{1," + width +
+		     "}(\\s|$)|\\ S+?(\\s|$)", "g");
+
+	  return str.match(RegExp(re)).join(brk);
+	},
+
+	pointInPoly: function (point, vs) {
+    // ray-casting algorithm based on
+    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+    var x = point[0], y = point[1];
+
+    var inside = false;
+    for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+      var xi = vs[i][0], yi = vs[i][1];
+      var xj = vs[j][0], yj = vs[j][1];
+
+      var intersect = ((yi > y) != (yj > y))
+          && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+      if (intersect) inside = !inside;
+    }
+
+    return inside;
+	},
 
 	socketNotificationReceived: function (notification, payload) {
 		Log.info(notification);
-		if (notification === 'WARNINGS_DATA' && payload['region'] == this.config.region) {
-			Log.info(payload);
-			this.warnings = payload['warnings'];
-			this.loaded = true;
-			this.noWarnings = false;
-			this.updateDom(1000);
-		} else if (notification === 'NO_WARNINGS' && payload['region'] == this.config.region) {
-			this.loaded = true;
-			this.noWarnings = true;
-			this.updateDom(1000);
+
+		if (notification === 'WARNINGS_DATA') {
+			if(payload.community.hasOwnProperty('geometry')){
+				if (payload.region == this.config.region || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])){
+					Log.info(payload);
+					this.warnings = payload.warnings;
+					this.community = payload.community;
+					this.loaded = true;
+					this.noWarnings = false;
+					this.updateDom(1000);
+				}
+			}
 		}
 	}
 });
