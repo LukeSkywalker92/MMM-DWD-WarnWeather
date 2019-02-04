@@ -1,3 +1,21 @@
+Dokumentation DWD: https://www.dwd.de/DE/leistungen/opendata/help/warnungen/cap_dwd_profile_de_pdf.pdf
+
+Farbcodes
+Warnungstyp 		Farbe 		CAP (RGB)
+
+Keine 			Hellblau	-
+
+Vorabinformation 	Rosa		255, 128, 128
+
+Wetterwarnung 		Gelb		255, 255, 0
+
+Markantes Wetter 	Orange		255, 153, 0
+
+Unwetterwarnung 	Rot		255, 0, 0
+
+Extreme Wetterwarnung 	Violett		175, 0, 100
+
+
 MMM-DWD-WarnWeather
 ===================
 This a module for the [MagicMirror](https://github.com/MichMich/MagicMirror). It can display weather-warnings of [Deutscher Wetterdienst](http://www.dwd.de/DE/Home/home_node.html). The module shows you current weather-warnings of your region in Germany.
