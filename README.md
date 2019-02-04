@@ -2,11 +2,17 @@ Dokumentation DWD: https://www.dwd.de/DE/leistungen/opendata/help/warnungen/cap_
 
 Farbcodes
 Warnungstyp 		Farbe 		CAP (RGB)
+
 Keine 			Hellblau	-
+
 Vorabinformation 	Rosa		255, 128, 128
+
 Wetterwarnung 		Gelb		255, 255, 0
+
 Markantes Wetter 	Orange		255, 153, 0
+
 Unwetterwarnung 	Rot		255, 0, 0
+
 Extreme Wetterwarnung 	Violett		175, 0, 100
 
 
