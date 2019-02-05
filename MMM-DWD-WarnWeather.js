@@ -58,12 +58,12 @@ Module.register("MMM-DWD-WarnWeather", {
 	// Make node_helper to get new warning-data
 	updateWarnings: function (self) {
 		if (self.config.region) {
-			var region = {reg:self.config.region, sevThres:self.config.severityThreshold};
-			self.sendSocketNotification('GET_WARNINGS', region);
+			var regionThreshold = {reg:self.config.region, sevThres:self.config.severityThreshold};
+			self.sendSocketNotification('GET_WARNINGS', regionThreshold);
 	  }
 		else if (self.config.lat && self.config.lng) {
-			var coords = {lat:self.config.lat, lng:self.config.lng, sevThres:self.config.severityThreshold};
-			self.sendSocketNotification('GET_WARNINGS', coords);
+			var coordsThreshold = {lat:self.config.lat, lng:self.config.lng, sevThres:self.config.severityThreshold};
+			self.sendSocketNotification('GET_WARNINGS', coordsThreshold);
 		}
 		setTimeout(self.updateWarnings, self.config.interval, self);
 	},
