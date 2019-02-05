@@ -5,6 +5,9 @@
  *
  * By Luke Scheffler https://github.com/LukeSkywalker92
  * MIT Licensed.
+ *
+ * extended by the possibility to only request warnings higher than a certain warning level
+ * By @spitzlbergerj
  */
 
 Module.register("MMM-DWD-WarnWeather", {
