@@ -1,6 +1,11 @@
 Dokumentation DWD: https://www.dwd.de/DE/leistungen/opendata/help/warnungen/cap_dwd_profile_de_pdf.pdf
 https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/einbindung_karten_geowebservice.pdf?__blob=publicationFile&v=11
 
+Severity:
+Minor Wetterwarnung (Gelb)
+Moderate Markante Wetterwarnung (Orange)
+Severe Unwetterwarnung (Rot)
+Extreme Extreme Unwetterwarnung (Violet)
 
 Farbcodes
 Warnungstyp 		Farbe 		CAP (RGB)
