@@ -19,12 +19,25 @@ module.exports = NodeHelper.create({
 
 	getWarningData: function (region, callback) {
 		var self = this;
+		var severityStr = " AND SEVERITY IN ('Extreme'";
+		
+		if (region.sevThres < 4) {
+			severityStr = severityStr + ",'Severe'";
+		}
+		else if (region.sevThres < 3) {
+			severityStr = severityStr + ",'Moderate'";
+		}
+		else if (region.sevThres < 2) {
+			severityStr = severityStr + ",'Minor'";
+		}					 
 
+		severityStr = severityStr + ")";
+							 
 		if (region.lng) {
-			var regionFilter = encodeURIComponent("CONTAINS(THE_GEOM, POINT(" + region.lng + " " + region.lat + "))");
+			var regionFilter = encodeURIComponent("CONTAINS(THE_GEOM, POINT(" + region.lng + " " + region.lat + "))" + severityStr);
 		}
     else {
-		  var regionFilter = encodeURIComponent("AREADESC='" + region + "'");
+		  var regionFilter = encodeURIComponent("AREADESC='" + region.reg + "'" + severityStr);
     }
 
 		var communityData = [];
