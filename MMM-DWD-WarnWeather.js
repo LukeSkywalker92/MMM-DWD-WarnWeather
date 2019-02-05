@@ -19,7 +19,8 @@ Module.register("MMM-DWD-WarnWeather", {
 		changeColor: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		loadingText: 'Warnungen werden geladen...',
-		noWarningText: 'Keine Warnungen'
+		noWarningText: 'Keine Warnungen',
+		severityThreshold: 2
 	},
 	// Required scrpits
 	getScripts: function () {
