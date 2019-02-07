@@ -28,6 +28,7 @@ The entry in `config.js` can include the following options:
 |`displayRegionName`|show region name in header info<br><br>**Default value:** `true`|
 |`loadingText`|The text used while loading warnings.<br><br>**Default value:** `'Warnungen werden geladen...'`|
 |`noWarningText`|The text used when there are no warnings for your region.<br><br>**Default value:** `'Keine Warnungen'`|
+|`severityThreshold`|The warning level at which the weather warnings are to be displayed.<br><br>**Type:** Integer, **Values:** 1, 2, 3, 4<br>**Default value:** `1`|
 
 
 Here is an example of an entry in `config.js`
@@ -43,7 +44,8 @@ Here is an example of an entry in `config.js`
 		displayRegionName: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		loadingText: 'Warnungen werden geladen...',
-		noWarningText: 'Keine Warnungen'
+		noWarningText: 'Keine Warnungen',
+		severityThreshold: 2
 	}
 },
 ```
@@ -60,3 +62,14 @@ Here is an example of an entry in `config.js`
 ## Special Thanks
 - [Michael Teeuw](https://github.com/MichMich) for creating the awesome [MagicMirror2](https://github.com/MichMich/MagicMirror/tree/develop) project that made this module possible.
 - [SamLewis0602](https://github.com/SamLewis0602) for creating the [MMM-Traffic](https://github.com/SamLewis0602/MMM-Traffic) module that I used as guidance in creating this module.
+
+## Documentation of the DWD Api
+WMS-Dienste für die eigene Website: https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/einbindung_karten_geowebservice.pdf?__blob=publicationFile&v=11
+
+Common Alerting Protocol: https://www.dwd.de/DE/leistungen/opendata/help/warnungen/cap_dwd_profile_de_pdf.pdf
+
+Severity levels:
+- Minor (Level 1 - Wetterwarnung - Gelb)
+- Moderate (Level 2 - Markante Wetterwarnung - Orange)
+- Severe (Level 3 - Unwetterwarnung - Rot)
+- Extreme (level 4 - Extreme Unwetterwarnung - Violet)

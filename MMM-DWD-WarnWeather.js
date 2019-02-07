@@ -5,6 +5,9 @@
  *
  * By Luke Scheffler https://github.com/LukeSkywalker92
  * MIT Licensed.
+ *
+ * extended by the possibility to only request warnings higher than a certain warning level
+ * By @spitzlbergerj
  */
 
 Module.register("MMM-DWD-WarnWeather", {
@@ -19,7 +22,9 @@ Module.register("MMM-DWD-WarnWeather", {
 		changeColor: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		loadingText: 'Warnungen werden geladen...',
-		noWarningText: 'Keine Warnungen'
+		noWarningText: 'Keine Warnungen',
+		noWarningTextGreater: ' ab Warnstufe Level ',
+		severityThreshold: 1
 	},
 	// Required scrpits
 	getScripts: function () {
@@ -57,11 +62,12 @@ Module.register("MMM-DWD-WarnWeather", {
 	// Make node_helper to get new warning-data
 	updateWarnings: function (self) {
 		if (self.config.region) {
-		  self.sendSocketNotification('GET_WARNINGS', self.config.region);
+			var regionThreshold = {reg:self.config.region, sevThres:self.config.severityThreshold};
+			self.sendSocketNotification('GET_WARNINGS', regionThreshold);
 	  }
 		else if (self.config.lat && self.config.lng) {
-			var coords = {lat:self.config.lat, lng:self.config.lng};
-			self.sendSocketNotification('GET_WARNINGS', coords);
+			var coordsThreshold = {lat:self.config.lat, lng:self.config.lng, sevThres:self.config.severityThreshold};
+			self.sendSocketNotification('GET_WARNINGS', coordsThreshold);
 		}
 		setTimeout(self.updateWarnings, self.config.interval, self);
 	},
@@ -95,7 +101,12 @@ Module.register("MMM-DWD-WarnWeather", {
 		if (this.warnings.length < 1) {
 			var noWarningWrapper = document.createElement("p");
 			noWarningWrapper.className = 'status';
-			noWarningWrapper.innerHTML = this.config.noWarningText;
+			if (this.config.severityThreshold < 2) {
+				noWarningWrapper.innerHTML = this.config.noWarningText;
+			}
+			else {
+				noWarningWrapper.innerHTML = this.config.noWarningText + this.config.noWarningTextGreater + this.config.severityThreshold;
+			}
 			wrapper.appendChild(noWarningWrapper);
 			return wrapper;
 		}
