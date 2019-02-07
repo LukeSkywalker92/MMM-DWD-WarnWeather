@@ -23,6 +23,7 @@ Module.register("MMM-DWD-WarnWeather", {
 		interval: 10 * 60 * 1000, // every 10 minutes
 		loadingText: 'Warnungen werden geladen...',
 		noWarningText: 'Keine Warnungen',
+		noWarningTextGreater: ' ab Warnstufe Level ',
 		severityThreshold: 1
 	},
 	// Required scrpits
@@ -100,7 +101,12 @@ Module.register("MMM-DWD-WarnWeather", {
 		if (this.warnings.length < 1) {
 			var noWarningWrapper = document.createElement("p");
 			noWarningWrapper.className = 'status';
-			noWarningWrapper.innerHTML = this.config.noWarningText;
+			if (this.config.severityThreshold < 2) {
+				noWarningWrapper.innerHTML = this.config.noWarningText;
+			}
+			else {
+				noWarningWrapper.innerHTML = this.config.noWarningText + this.config.noWarningTextGreater + this.config.severityThreshold;
+			}
 			wrapper.appendChild(noWarningWrapper);
 			return wrapper;
 		}
