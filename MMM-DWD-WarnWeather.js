@@ -8,6 +8,9 @@
  *
  * extended by the possibility to only request warnings higher than a certain warning level
  * By @spitzlbergerj
+ *
+ * extended by the possibility to hide header.innerHTML
+ * By @spitzlbergerj
  */
 
 Module.register("MMM-DWD-WarnWeather", {
@@ -24,7 +27,9 @@ Module.register("MMM-DWD-WarnWeather", {
 		loadingText: 'Warnungen werden geladen...',
 		noWarningText: 'Keine Warnungen',
 		noWarningTextGreater: ' ab Warnstufe Level ',
-		severityThreshold: 1
+		severityThreshold: 1,
+		// hide header.innerHTML
+		displayInnerHeader: true,
 	},
 	// Required scrpits
 	getScripts: function () {
@@ -77,16 +82,23 @@ Module.register("MMM-DWD-WarnWeather", {
 		var wrapper = document.createElement("div");
 		wrapper.className = 'wrapper';
 
+		// @spitzlbergerj: possibility to hide inner header
+		// with separation of header and "Location not found"
 		var header = document.createElement("header");
-		if (this.community.hasOwnProperty('properties')){
-			header.innerHTML = 'Wetterwarnungen';
-			if (this.config.displayRegionName && this.loaded) {
-				header.innerHTML += ' für:<br>' + this.community.properties.NAME;
-			}
-		} else {
-			header.innerHTML = 'Ort nicht gefunden';
+		header.innerHTML = 'Wetterwarnungen';
+		if (this.config.displayRegionName && this.loaded) {
+			header.innerHTML += ' für:<br>' + this.community.properties.NAME;
 		}
-		wrapper.appendChild(header);
+		if (this.config.displayInnerHeader) {
+			wrapper.appendChild(header);
+		}
+
+		var locNotFound = document.createElement("div");
+		locNotFound.className = 'locationNotFound';
+		if (! this.community.hasOwnProperty('properties')){
+			locNotFound.innerHTML = 'Ort nicht gefunden';
+			wrapper.appendChild(locNotFound);
+		}
 
 		// Check if warning data was loaded
 		if (!this.loaded) {
@@ -150,6 +162,7 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		}
 
+		//Log.info(wrapper);
 		return wrapper;
 	},
 

@@ -29,6 +29,7 @@ The entry in `config.js` can include the following options:
 |`loadingText`|The text used while loading warnings.<br><br>**Default value:** `'Warnungen werden geladen...'`|
 |`noWarningText`|The text used when there are no warnings for your region.<br><br>**Default value:** `'Keine Warnungen'`|
 |`severityThreshold`|The warning level at which the weather warnings are to be displayed.<br><br>**Type:** Integer, **Values:** 1, 2, 3, 4<br>**Default value:** `1`|
+|`displayInnerHeader`|Display a second header line with the text "Wetterwarnungen" appended by the region if displayRegionName is set to true.<br><br>**Type:** boolean, **Values:** true, false<br>**Default value:** `true`|
 
 
 Here is an example of an entry in `config.js`
@@ -42,6 +43,7 @@ Here is an example of an entry in `config.js`
 		changeColor: true,
 		minutes: false,
 		displayRegionName: true,
+		displayInnerHeader: true,
 		interval: 10 * 60 * 1000, // every 10 minutes
 		loadingText: 'Warnungen werden geladen...',
 		noWarningText: 'Keine Warnungen',
