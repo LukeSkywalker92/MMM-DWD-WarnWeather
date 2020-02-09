@@ -1,5 +1,5 @@
-.wrapper {}
-.displaytitle {
+.MMM-DWD-WarnWeather .wrapper {}
+.MMM-DWD-WarnWeather .displaytitle {
 	text-transform: uppercase;
 	font-size: 15px;
 	font-family: Roboto Condensed;
@@ -9,14 +9,14 @@
 	margin-bottom: 10px;
 	color: #999;
 }
-.status {
+.MMM-DWD-WarnWeather .status {
 	color: #666;
 	width: auto;
 	font-size: 20px;
 	line-height: 25px;
 	text-align: left;
 }
-.weathericon {
+.MMM-DWD-WarnWeather .weathericon {
 	width: 256px;
 	height: 256px;
 	display: block;
@@ -24,89 +24,89 @@
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-binnensee {
+.MMM-DWD-WarnWeather .sprite-binnensee {
 	mask: url(icons/binnensee.svg);
 	-webkit-mask: url(icons/binnensee.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
 
-.sprite-frost {
+.MMM-DWD-WarnWeather .sprite-frost {
 	mask: url(icons/frost.svg);
 	-webkit-mask: url(icons/frost.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-gewitter {
+.MMM-DWD-WarnWeather .sprite-gewitter {
 	mask: url(icons/gewitter.svg);
 	-webkit-mask: url(icons/gewitter.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-glatteis {
+.MMM-DWD-WarnWeather .sprite-glatteis {
 	mask: url(icons/glatteis.svg);
 	-webkit-mask: url(icons/glatteis.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-hitze {
+.MMM-DWD-WarnWeather .sprite-hitze {
 	mask: url(icons/hitze.svg);
 	-webkit-mask: url(icons/hitze.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-nebel {
+.MMM-DWD-WarnWeather .sprite-nebel {
 	mask: url(icons/nebel.svg);
 	-webkit-mask: url(icons/nebel.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-regen {
+.MMM-DWD-WarnWeather .sprite-regen {
 	mask: url(icons/regen.svg);
 	-webkit-mask: url(icons/regen.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-schnee {
+.MMM-DWD-WarnWeather .sprite-schnee {
 	mask: url(icons/schnee.svg);
 	-webkit-mask: url(icons/schnee.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-sea {
+.MMM-DWD-WarnWeather .sprite-sea {
 	mask: url(icons/sea.svg);
 	-webkit-mask: url(icons/sea.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-kueste {
+.MMM-DWD-WarnWeather .sprite-kueste {
 	mask: url(icons/kueste.svg);
 	-webkit-mask: url(icons/kueste.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-sturm {
+.MMM-DWD-WarnWeather .sprite-sturm {
 	mask: url(icons/sturm.svg);
 	-webkit-mask: url(icons/sturm.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-tauwetter {
+.MMM-DWD-WarnWeather .sprite-tauwetter {
 	mask: url(icons/tauwetter.svg);
 	-webkit-mask: url(icons/tauwetter.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.sprite-uv {
+.MMM-DWD-WarnWeather .sprite-uv {
 	mask: url(icons/uv.svg);
 	-webkit-mask: url(icons/uv.svg);
 	mask-repeat: no-repeat;
 	-webkit-mask-repeat: no-repeat;
 }
-.warning {
+.MMM-DWD-WarnWeather .warning {
 	margin-bottom: -40px
 }
-.small-icon {
+.MMM-DWD-WarnWeather .small-icon {
 	float: left;
 	position: absolute;
 	zoom: .18;
@@ -115,7 +115,7 @@
 	-moz-transform-origin: 0 0;
 
 }
-.description {
+.MMM-DWD-WarnWeather .description {
 	font-family: Roboto;
 	margin-left: 10px;
 	color: white;
@@ -127,18 +127,18 @@
 	line-height: 20px;
 	text-align: left;
 }
-.line {
+.MMM-DWD-WarnWeather .line {
 	width: 300px;
 }
 hr {
 	width: 300px;
 }
-.duration {
+.MMM-DWD-WarnWeather .duration {
 	color: #999;
 }
 br {
 	height: 0px;
 }
-.black {
+.MMM-DWD-WarnWeather .black {
 	background-color: black;
 }
