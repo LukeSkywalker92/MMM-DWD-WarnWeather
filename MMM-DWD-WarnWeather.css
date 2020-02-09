@@ -1,5 +1,5 @@
 .wrapper {}
-.displaytitle {
+.MMM-DWD-WarnWeather .displaytitle {
 	text-transform: uppercase;
 	font-size: 15px;
 	font-family: Roboto Condensed;
@@ -9,87 +9,87 @@
 	margin-bottom: 10px;
 	color: #999;
 }
-.status {
+.MMM-DWD-WarnWeather .status {
 	color: #666;
 	width: auto;
 	font-size: 20px;
 	line-height: 25px;
 	text-align: left;
 }
-.weathericon {
+.MMM-DWD-WarnWeather .weathericon {
 	background-image: url(icons/icons-transparent.png);
 	background-repeat: no-repeat;
 	display: block;
 }
-.sprite-binnensee {
+.MMM-DWD-WarnWeather .sprite-binnensee {
 	width: 256px;
 	height: 256px;
 	background-position: -5px -5px;
 }
-.sprite-frost {
+.MMM-DWD-WarnWeather .sprite-frost {
 	width: 256px;
 	height: 256px;
 	background-position: -271px -5px;
 }
-.sprite-gewitter {
+.MMM-DWD-WarnWeather .sprite-gewitter {
 	width: 256px;
 	height: 256px;
 	background-position: -537px -5px;
 }
-.sprite-glatteis {
+.MMM-DWD-WarnWeather .sprite-glatteis {
 	width: 256px;
 	height: 256px;
 	background-position: -5px -271px;
 }
-.sprite-hitze {
+.MMM-DWD-WarnWeather .sprite-hitze {
 	width: 256px;
 	height: 256px;
 	background-position: -271px -271px;
 }
-.sprite-nebel {
+.MMM-DWD-WarnWeather .sprite-nebel {
 	width: 256px;
 	height: 256px;
 	background-position: -537px -271px;
 }
-.sprite-regen {
+.MMM-DWD-WarnWeather .sprite-regen {
 	width: 256px;
 	height: 256px;
 	background-position: -5px -537px;
 }
-.sprite-schnee {
+.MMM-DWD-WarnWeather .sprite-schnee {
 	width: 256px;
 	height: 256px;
 	background-position: -271px -537px;
 }
-.sprite-sea {
+.MMM-DWD-WarnWeather .sprite-sea {
 	width: 256px;
 	height: 256px;
 	background-position: -537px -537px;
 }
-.sprite-kueste {
+.MMM-DWD-WarnWeather .sprite-kueste {
 	width: 256px;
 	height: 256px;
 	background-position: -537px -537px;
 }
-.sprite-sturm {
+.MMM-DWD-WarnWeather .sprite-sturm {
 	width: 256px;
 	height: 256px;
 	background-position: -803px -5px;
 }
-.sprite-tauwetter {
+.MMM-DWD-WarnWeather .sprite-tauwetter {
 	width: 256px;
 	height: 256px;
 	background-position: -803px -271px;
 }
-.sprite-uv {
+.MMM-DWD-WarnWeather .sprite-uv {
 	width: 256px;
 	height: 256px;
 	background-position: -803px -537px;
 }
-.warning {
+.MMM-DWD-WarnWeather .warning {
 	margin-bottom: -40px
 }
-.small-icon {
+.MMM-DWD-WarnWeather .small-icon {
 	float: left;
 	position: absolute;
 	zoom: .18;
@@ -98,7 +98,7 @@
 	-moz-transform-origin: 0 0;
 
 }
-.description {
+.MMM-DWD-WarnWeather .description {
 	font-family: Roboto;
 	margin-left: 10px;
 	color: white;
@@ -110,18 +110,18 @@
 	line-height: 20px;
 	text-align: left;
 }
-.line {
+.MMM-DWD-WarnWeather .line {
 	width: 300px;
 }
-hr {
+.MMM-DWD-WarnWeather hr {
 	width: 300px;
 }
-.duration {
+.MMM-DWD-WarnWeather .duration {
 	color: #999;
 }
-br {
+.MMM-DWD-WarnWeather br {
 	height: 0px;
 }
-.black {
+.MMM-DWD-WarnWeather .black {
 	background-color: black;
 }
