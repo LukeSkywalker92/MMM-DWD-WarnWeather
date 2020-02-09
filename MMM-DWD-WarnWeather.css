@@ -17,74 +17,91 @@
 	text-align: left;
 }
 .weathericon {
-	background-image: url(icons/icons-transparent.png);
-	background-repeat: no-repeat;
+	width: 256px;
+	height: 256px;
 	display: block;
+	background-color: #fff;
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-binnensee {
-	width: 256px;
-	height: 256px;
-	background-position: -5px -5px;
+	mask: url(icons/binnensee.svg);
+	-webkit-mask: url(icons/binnensee.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
+
 .sprite-frost {
-	width: 256px;
-	height: 256px;
-	background-position: -271px -5px;
+	mask: url(icons/frost.svg);
+	-webkit-mask: url(icons/frost.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-gewitter {
-	width: 256px;
-	height: 256px;
-	background-position: -537px -5px;
+	mask: url(icons/gewitter.svg);
+	-webkit-mask: url(icons/gewitter.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-glatteis {
-	width: 256px;
-	height: 256px;
-	background-position: -5px -271px;
+	mask: url(icons/glatteis.svg);
+	-webkit-mask: url(icons/glatteis.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-hitze {
-	width: 256px;
-	height: 256px;
-	background-position: -271px -271px;
+	mask: url(icons/hitze.svg);
+	-webkit-mask: url(icons/hitze.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-nebel {
-	width: 256px;
-	height: 256px;
-	background-position: -537px -271px;
+	mask: url(icons/nebel.svg);
+	-webkit-mask: url(icons/nebel.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-regen {
-	width: 256px;
-	height: 256px;
-	background-position: -5px -537px;
+	mask: url(icons/regen.svg);
+	-webkit-mask: url(icons/regen.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-schnee {
-	width: 256px;
-	height: 256px;
-	background-position: -271px -537px;
+	mask: url(icons/schnee.svg);
+	-webkit-mask: url(icons/schnee.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-sea {
-	width: 256px;
-	height: 256px;
-	background-position: -537px -537px;
+	mask: url(icons/sea.svg);
+	-webkit-mask: url(icons/sea.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-kueste {
-	width: 256px;
-	height: 256px;
-	background-position: -537px -537px;
+	mask: url(icons/kueste.svg);
+	-webkit-mask: url(icons/kueste.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-sturm {
-	width: 256px;
-	height: 256px;
-	background-position: -803px -5px;
+	mask: url(icons/sturm.svg);
+	-webkit-mask: url(icons/sturm.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-tauwetter {
-	width: 256px;
-	height: 256px;
-	background-position: -803px -271px;
+	mask: url(icons/tauwetter.svg);
+	-webkit-mask: url(icons/tauwetter.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .sprite-uv {
-	width: 256px;
-	height: 256px;
-	background-position: -803px -537px;
+	mask: url(icons/uv.svg);
+	-webkit-mask: url(icons/uv.svg);
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
 }
 .warning {
 	margin-bottom: -40px
