@@ -130,13 +130,13 @@
 .MMM-DWD-WarnWeather .line {
 	width: 300px;
 }
-hr {
+.MMM-DWD-WarnWeather hr {
 	width: 300px;
 }
 .MMM-DWD-WarnWeather .duration {
 	color: #999;
 }
-br {
+.MMM-DWD-WarnWeather br {
 	height: 0px;
 }
 .MMM-DWD-WarnWeather .black {
