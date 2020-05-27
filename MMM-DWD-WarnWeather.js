@@ -47,18 +47,18 @@ Module.register("MMM-DWD-WarnWeather", {
 		this.community = [];
 		this.icons = {
 			THUNDERSTORM: 'sprite-gewitter',
-			WIND:         'sprite-sturm',
-			TORNADO:      'sprite-sturm',
-			RAIN:         'sprite-regen',
-			HAIL:         'sprite-schnee',
-			SNOWFALL:     'sprite-schnee',
-			SNOWDRIFT:    'sprite-schnee',
-			FOG:          'sprite-nebel',
-			FROST:        'sprite-frost',
-			GLAZE:        'sprite-glatteis',
-			THAW:         'sprite-tauwetter',
-			HEAT:         'sprite-hitze',
-			UV:           'sprite-uv'
+			WIND: 'sprite-sturm',
+			TORNADO: 'sprite-sturm',
+			RAIN: 'sprite-regen',
+			HAIL: 'sprite-schnee',
+			SNOWFALL: 'sprite-schnee',
+			SNOWDRIFT: 'sprite-schnee',
+			FOG: 'sprite-nebel',
+			FROST: 'sprite-frost',
+			GLAZE: 'sprite-glatteis',
+			THAW: 'sprite-tauwetter',
+			HEAT: 'sprite-hitze',
+			UV: 'sprite-uv'
 		}
 
 		this.updateWarnings(this);
@@ -67,11 +67,15 @@ Module.register("MMM-DWD-WarnWeather", {
 	// Make node_helper to get new warning-data
 	updateWarnings: function (self) {
 		if (self.config.region) {
-			var regionThreshold = {reg:self.config.region, sevThres:self.config.severityThreshold};
+			var regionThreshold = { reg: self.config.region, sevThres: self.config.severityThreshold };
 			self.sendSocketNotification('GET_WARNINGS', regionThreshold);
-	  }
+		}
+		else if (self.config.warnCellID) {
+			var cellIDThreshold = { cellid: self.config.warnCellID, sevThres: self.config.severityThreshold };
+			self.sendSocketNotification('GET_WARNINGS', cellIDThreshold);
+		}
 		else if (self.config.lat && self.config.lng) {
-			var coordsThreshold = {lat:self.config.lat, lng:self.config.lng, sevThres:self.config.severityThreshold};
+			var coordsThreshold = { lat: self.config.lat, lng: self.config.lng, sevThres: self.config.severityThreshold };
 			self.sendSocketNotification('GET_WARNINGS', coordsThreshold);
 		}
 		setTimeout(self.updateWarnings, self.config.interval, self);
@@ -95,7 +99,7 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		var locNotFound = document.createElement("div");
 		locNotFound.className = 'locationNotFound';
-		if (! this.community.hasOwnProperty('properties')){
+		if (!this.community.hasOwnProperty('properties')) {
 			locNotFound.innerHTML = 'Ort nicht gefunden';
 			wrapper.appendChild(locNotFound);
 		}
@@ -172,40 +176,40 @@ Module.register("MMM-DWD-WarnWeather", {
 		width = width || 75;
 
 		if (!str) {
-		  return str;
+			return str;
 		}
 
 		var re = new RegExp(".{1," + width +
-		     "}(\\s|$)|\\ S+?(\\s|$)", "g");
+			"}(\\s|$)|\\ S+?(\\s|$)", "g");
 
-	  return str.match(RegExp(re)).join(brk);
+		return str.match(RegExp(re)).join(brk);
 	},
 
 	pointInPoly: function (point, vs) {
-    // ray-casting algorithm based on
-    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+		// ray-casting algorithm based on
+		// http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
 
-    var x = point[0], y = point[1];
+		var x = point[0], y = point[1];
 
-    var inside = false;
-    for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-      var xi = vs[i][0], yi = vs[i][1];
-      var xj = vs[j][0], yj = vs[j][1];
+		var inside = false;
+		for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+			var xi = vs[i][0], yi = vs[i][1];
+			var xj = vs[j][0], yj = vs[j][1];
 
-      var intersect = ((yi > y) != (yj > y))
-          && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-      if (intersect) inside = !inside;
-    }
+			var intersect = ((yi > y) != (yj > y))
+				&& (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+			if (intersect) inside = !inside;
+		}
 
-    return inside;
+		return inside;
 	},
 
 	socketNotificationReceived: function (notification, payload) {
 		Log.info(notification);
 
 		if (notification === 'WARNINGS_DATA') {
-			if(payload.community.hasOwnProperty('geometry')){
-				if (payload.region == this.config.region || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])){
+			if (payload.community.hasOwnProperty('geometry')) {
+				if (payload.region == this.config.region || payload.region == this.config.warnCellID || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])) {
 					Log.info(payload);
 					this.warnings = payload.warnings;
 					this.community = payload.community;
