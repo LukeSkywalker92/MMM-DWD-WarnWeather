@@ -17,9 +17,10 @@ The entry in `config.js` can include the following options:
 
 |Option|Description|
 |---|---|
-|`region`|now using the new more detailed DWD API.<br><br>To find the correct region name:<br><ul><li>go [here](https://maps.dwd.de/geoserver/dwd/wms?service=WMS&version=1.1.0&request=GetMap&layers=dwd:Warngebiete_Gemeinden&styles=&bbox=5.876914,47.270362,15.037507,55.044381&width=1024&height=868&srs=EPSG:4326&format=application/openlayers#)</li><li>toggle options toolbar (three dots at the top left)</li><li>if necessary enter "NAME LIKE '%&lt;your region name&gt;%'" at the top right next to the 'CQL' dropdown</li><li>optional: change style in dropdown from "Default" to "Warngebiete_Gemeinden_Text" for easier selection</li><li>click on your city/town/community/area...</li><li>the correct region name is DWD_NAME from the table below the map (case sensitive!)</li></ul><br>**Type:** `string`<br>Use **either** this **or** `lat` and `lng`.|
-|`lat`|Latitude of the place to check.<br><br>Use **either** this and `lng` **or** `region`.|
-|`lng`|Longitude of the place to check.<br><br>Use **either** this and `lat` **or** `region`.|
+|`region`|now using the new more detailed DWD API.<br><br>To find the correct region name:<br><ul><li>go [here](https://maps.dwd.de/geoserver/dwd/wms?service=WMS&version=1.1.0&request=GetMap&layers=dwd:Warngebiete_Gemeinden&styles=&bbox=5.876914,47.270362,15.037507,55.044381&width=1024&height=868&srs=EPSG:4326&format=application/openlayers#)</li><li>toggle options toolbar (three dots at the top left)</li><li>if necessary enter "NAME LIKE '%&lt;your region name&gt;%'" at the top right next to the 'CQL' dropdown</li><li>optional: change style in dropdown from "Default" to "Warngebiete_Gemeinden_Text" for easier selection</li><li>click on your city/town/community/area...</li><li>the correct region name is KURZNAME from the table below the map (case sensitive!)</li></ul><br>**Type:** `string`<br>Use **either** this **or** `lat` and `lng`.|
+|`warnCellID`|Cell ID of your region. You can find your region using [this csv file](https://www.dwd.de/DE/leistungen/opendata/help/warnungen/cap_warncellids_csv.csv?__blob=publicationFile&v=3) <br><br>Use **either** this **or** `lat` and `lng` **or** `region`.|
+|`lat`|Latitude of the place to check.<br><br>Use **either** this and `lng` **or** `warnCellID` **or** `region`.|
+|`lng`|Longitude of the place to check.<br><br>Use **either** this and `lat` **or** `warnCellID` **or** `region`.|
 |`changeColor`|When `changeColor` is set to true, the color of the warning icons will change based on the warning level. <br><br>**Default value:** `true`|
 |`interval`|How often the warnings are updated.<br><br>**Default value:** `10 • 60 • 1000` // every 10 minutes|
 |`longversion`|Show the full Description of Warnings if true.<br><br>**Default value:** `false`|
@@ -39,7 +40,7 @@ Here is an example of an entry in `config.js`
 	position: 'top_left',
 	header: 'Wetterwarnungen',
 	config: {
-		region: 'Kreis Lörrach',
+		region: 'Lörrach',
 		changeColor: true,
 		minutes: false,
 		displayRegionName: true,
