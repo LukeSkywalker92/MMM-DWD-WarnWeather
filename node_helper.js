@@ -49,7 +49,7 @@ module.exports = NodeHelper.create({
 		var warningData = [];
 
 		var nameurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warngebiete_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' +
-			(regionFilter.includes("AREADESC") ? regionFilter.replace("AREADESC", "DWD_NAME") : regionFilter);
+			(regionFilter.includes("AREADESC") ? regionFilter.replace("AREADESC", "NAME") : regionFilter);
 		// console.error(nameurl);
 		var warnurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warnungen_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' + regionFilter + severityStr;
 		// console.error(warnurl);
