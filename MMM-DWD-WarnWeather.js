@@ -30,6 +30,7 @@ Module.register("MMM-DWD-WarnWeather", {
 		severityThreshold: 1,
 		// hide header.innerHTML
 		displayInnerHeader: true,
+		hideNoWarning: false, // hide module if there is no warning
 	},
 	// Required scrpits
 	getScripts: function () {
@@ -96,6 +97,9 @@ Module.register("MMM-DWD-WarnWeather", {
 		if (this.config.displayInnerHeader) {
 			wrapper.appendChild(header);
 		}
+		if (this.warnings.length < 1 && this.config.hideNoWarning) {
+			this.data.header = '';
+		}
 
 		var locNotFound = document.createElement("div");
 		locNotFound.className = 'locationNotFound';
@@ -117,11 +121,17 @@ Module.register("MMM-DWD-WarnWeather", {
 		if (this.warnings.length < 1) {
 			var noWarningWrapper = document.createElement("p");
 			noWarningWrapper.className = 'status';
-			if (this.config.severityThreshold < 2) {
-				noWarningWrapper.innerHTML = this.config.noWarningText;
+			
+			if (this.config.hideNoWarning) {
+				noWarningWrapper.innerHTML = '';
 			}
 			else {
-				noWarningWrapper.innerHTML = this.config.noWarningText + this.config.noWarningTextGreater + this.config.severityThreshold;
+				if (this.config.severityThreshold < 2) {
+					noWarningWrapper.innerHTML = this.config.noWarningText;
+				}
+				else {
+					noWarningWrapper.innerHTML = this.config.noWarningText + this.config.noWarningTextGreater + this.config.severityThreshold;
+				}
 			}
 			wrapper.appendChild(noWarningWrapper);
 			return wrapper;
