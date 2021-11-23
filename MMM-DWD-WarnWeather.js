@@ -97,9 +97,6 @@ Module.register("MMM-DWD-WarnWeather", {
 		if (this.config.displayInnerHeader) {
 			wrapper.appendChild(header);
 		}
-		if (this.warnings.length < 1 && this.config.hideNoWarning) {
-			this.data.header = '';
-		}
 
 		var locNotFound = document.createElement("div");
 		locNotFound.className = 'locationNotFound';
@@ -172,12 +169,23 @@ Module.register("MMM-DWD-WarnWeather", {
 			warnWrapper.appendChild(icon);
 			warnWrapper.appendChild(description);
 			wrapper.appendChild(warnWrapper);
-			wrapper.appendChild(newLine);
-
+			wrapper.appendChild(newLine1);
+			if (this.warnings.length > 1) {
+			    wrapper.appendChild(newLine2);
+			}
 		}
 
 		//Log.info(wrapper);
 		return wrapper;
+	},
+	
+	getHeader: function () {
+		if (this.warnings.length < 1 && this.config.hideNoWarning) {
+			if (this.data.header) return "";
+			else return "";
+		} else {
+			return this.data.header;
+		}
 	},
 
 	wordwrap: function (str, width, brk) {
