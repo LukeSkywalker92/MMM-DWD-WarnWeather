@@ -163,7 +163,8 @@ Module.register("MMM-DWD-WarnWeather", {
 			var duration = document.createElement("div");
 			duration.className = 'duration';
 			duration.innerHTML = start + ' - ' + end;
-			var newLine = document.createElement("br");
+			var newLine1 = document.createElement("br");
+			var newLine2 = document.createElement("br");
 			description.appendChild(headline);
 			description.appendChild(duration);
 			warnWrapper.appendChild(icon);
