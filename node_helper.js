@@ -9,7 +9,7 @@
  */
 
 var NodeHelper = require('node_helper');
-var request = require('request');
+const fetch = require('node-fetch');
 
 module.exports = NodeHelper.create({
 	start: function () {
@@ -54,16 +54,15 @@ module.exports = NodeHelper.create({
 		var warnurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warnungen_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' + regionFilter + severityStr;
 		// console.error(warnurl);
 
-		var requests = 2;
-
+                var requests = 2;
+		
 		//get name
-		request({
-			url: nameurl,
+		fetch(nameurl, {
 			method: 'GET'
-		}, function (error, response, body) {
-			var result = JSON.parse(body);
-			if (result.totalFeatures == 1) {
-				communityData = result.features[0];
+		}).then(res => res.json()
+		).then(json => {
+			if (json.totalFeatures == 1) {
+				communityData = json.features[0];
 			}
 			if (--requests == 0) {
 				if (region.reg)
@@ -72,18 +71,15 @@ module.exports = NodeHelper.create({
 					callback(self, warningData, region.cellid, communityData);
 			}
 		});
-
+		
 		//get warnings
-		request({
-			url: warnurl,
+		fetch(warnurl, {
 			method: 'GET'
-		}, function (error, response, body) {
-
-			var result = JSON.parse(body);
-
-			if (result.totalFeatures > 0) {
-				for (var i = 0; i < result.totalFeatures; i++) {
-					warningData.push(result.features[i]);
+		}).then(res => res.json()
+		).then(json => {
+			if (json.totalFeatures > 0) {
+				for (var i = 0; i < json.totalFeatures; i++) {
+					warningData.push(json.features[i]);
 				}
 			}
 			if (--requests == 0) {
