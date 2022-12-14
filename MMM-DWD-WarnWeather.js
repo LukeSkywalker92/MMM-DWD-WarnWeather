@@ -57,6 +57,7 @@ Module.register("MMM-DWD-WarnWeather", {
 			FOG: 'sprite-nebel',
 			FROST: 'sprite-frost',
 			GLAZE: 'sprite-glatteis',
+			SLIPPERINESS: 'sprite-glatteis',
 			THAW: 'sprite-tauwetter',
 			HEAT: 'sprite-hitze',
 			UV: 'sprite-uv'
