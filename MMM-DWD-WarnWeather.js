@@ -120,16 +120,17 @@ Module.register("MMM-DWD-WarnWeather", {
 			var noWarningWrapper = document.createElement("p");
 			noWarningWrapper.className = 'status';
 			
+			// Hide the module if there are no warnings and hideNoWarning is true
 			if (this.config.hideNoWarning) {
-				noWarningWrapper.innerHTML = '';
+				wrapper.classList.add('hidden'); // Add 'hidden' class to wrapper for hiding full module
+				return wrapper;
+			}
+
+			if (this.config.severityThreshold < 2) {
+				noWarningWrapper.innerHTML = this.config.noWarningText;
 			}
 			else {
-				if (this.config.severityThreshold < 2) {
-					noWarningWrapper.innerHTML = this.config.noWarningText;
-				}
-				else {
-					noWarningWrapper.innerHTML = this.config.noWarningText + this.config.noWarningTextGreater + this.config.severityThreshold;
-				}
+				noWarningWrapper.innerHTML = this.config.noWarningText + this.config.noWarningTextGreater + this.config.severityThreshold;
 			}
 			wrapper.appendChild(noWarningWrapper);
 			return wrapper;
@@ -176,14 +177,14 @@ Module.register("MMM-DWD-WarnWeather", {
 
 			wrapper.appendChild(newLineSingleWarning);
 			if (this.warnings.length > 1) {
-			    wrapper.appendChild(newLineMultipleWarning);
+				wrapper.appendChild(newLineMultipleWarning);
 			}
 		}
 
 		//Log.info(wrapper);
 		return wrapper;
 	},
-	
+
 	getHeader: function () {
 		if (this.warnings.length < 1 && this.config.hideNoWarning) {
 			if (this.data.header) return "";
