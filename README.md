@@ -29,6 +29,7 @@ The entry in `config.js` can include the following options:
 |`displayRegionName`|show region name in header info<br><br>**Default value:** `true`|
 |`loadingText`|The text used while loading warnings.<br><br>**Default value:** `'Warnungen werden geladen...'`|
 |`noWarningText`|The text used when there are no warnings for your region.<br><br>**Default value:** `'Keine Warnungen'`|
+|`hideNoWarning`|Hide the module when no warning is available.<br><br>**Default value:** `false`|
 |`severityThreshold`|The warning level at which the weather warnings are to be displayed.<br><br>**Type:** Integer, **Values:** 1, 2, 3, 4<br>**Default value:** `1`|
 |`displayInnerHeader`|Display a second header line with the text "Wetterwarnungen" appended by the region if displayRegionName is set to true.<br><br>**Type:** boolean, **Values:** true, false<br>**Default value:** `true`|
 
