@@ -40,6 +40,58 @@ Module.register("MMM-DWD-WarnWeather", {
 	getStyles: function () {
 		return ["MMM-DWD-WarnWeather.css"]
 	},
+	getTemplate: function () {
+		return "templates/default.njk";
+	},
+	getTemplateData: function () {
+		var data = {
+			config: this.config,
+			warnings: []
+		};
+		var communityName = null;
+		if (this.community && this.community.properties && this.community.properties.NAME) {
+			communityName = this.community.properties.NAME;
+		}
+		data.communityName = communityName;
+		data.showRegionName = this.config.displayRegionName && this.loaded && !!communityName;
+		data.locationNotFound = !this.community || !this.community.properties;
+
+		if (!this.loaded) {
+			data.status = this.config.loadingText;
+			return data;
+		}
+
+		if (this.warnings.length < 1) {
+			if (this.config.hideNoWarning) {
+				data.hideWrapper = true;
+			} else if (this.config.severityThreshold < 2) {
+				data.status = this.config.noWarningText;
+			} else {
+				data.status = this.config.noWarningText + this.config.noWarningTextGreater + this.config.severityThreshold;
+			}
+			return data;
+		}
+
+		var self = this;
+		data.warnings = this.warnings.map(function (warning) {
+			var timeDisplayFormat = self.config.minutes ? "dd. HH:mm" : "dd. HH";
+			var start = moment(warning.properties.ONSET).format(timeDisplayFormat) + " Uhr";
+			var end = moment(warning.properties.EXPIRES).format(timeDisplayFormat) + " Uhr";
+			var type = warning.properties.EC_GROUP.split(";")[0];
+			var event = self.config.longversion ? warning.properties.DESCRIPTION : warning.properties.EVENT;
+			var iconColor = self.config.changeColor ? warning.properties.EC_AREA_COLOR.replace(/ /g, ",") : "255,255,255";
+			return {
+				start: start,
+				end: end,
+				event: event,
+				iconClass: self.icons[type] || "",
+				iconStyle: "background-color: rgb(" + iconColor + ")",
+				maxWidthCh: self.config.longversion && self.config.width ? self.config.width : null
+			};
+		});
+
+		return data;
+	},
 	// Define parameters at start
 	start: function () {
 		this.loaded = false;
@@ -83,108 +135,6 @@ Module.register("MMM-DWD-WarnWeather", {
 		setTimeout(self.updateWarnings, self.config.interval, self);
 	},
 
-	// Override dom generator.
-	getDom: function () {
-		var wrapper = document.createElement("div");
-		wrapper.className = 'wrapper';
-
-		// @spitzlbergerj: possibility to hide inner header
-		// with separation of header and "Location not found"
-		var header = document.createElement("header");
-		header.innerHTML = 'Wetterwarnungen';
-		if (this.config.displayRegionName && this.loaded) {
-			header.innerHTML += ' für:<br>' + this.community.properties.NAME;
-		}
-		if (this.config.displayInnerHeader) {
-			wrapper.appendChild(header);
-		}
-
-		var locNotFound = document.createElement("div");
-		locNotFound.className = 'locationNotFound';
-		if (!this.community.hasOwnProperty('properties')) {
-			locNotFound.innerHTML = 'Ort nicht gefunden';
-			wrapper.appendChild(locNotFound);
-		}
-
-		// Check if warning data was loaded
-		if (!this.loaded) {
-			var loading = document.createElement("p");
-			loading.className = 'status';
-			loading.innerHTML = this.config.loadingText;
-			wrapper.appendChild(loading);
-			return wrapper;
-		}
-
-		// Check if there are warnings for defined region
-		if (this.warnings.length < 1) {
-			var noWarningWrapper = document.createElement("p");
-			noWarningWrapper.className = 'status';
-			
-			// Hide the module if there are no warnings and hideNoWarning is true
-			if (this.config.hideNoWarning) {
-				wrapper.classList.add('hidden'); // Add 'hidden' class to wrapper for hiding full module
-				return wrapper;
-			}
-
-			if (this.config.severityThreshold < 2) {
-				noWarningWrapper.innerHTML = this.config.noWarningText;
-			}
-			else {
-				noWarningWrapper.innerHTML = this.config.noWarningText + this.config.noWarningTextGreater + this.config.severityThreshold;
-			}
-			wrapper.appendChild(noWarningWrapper);
-			return wrapper;
-		}
-
-		// Display warnings
-		for (var i = 0; i < this.warnings.length; i++) {
-			timeDisplayFormat = this.config.minutes ? "dd. HH:mm" : "dd. HH";
-			var start = moment(this.warnings[i].properties.ONSET).format(timeDisplayFormat) + ' Uhr';
-			var end = moment(this.warnings[i].properties.EXPIRES).format(timeDisplayFormat) + ' Uhr';
-			var type = this.warnings[i].properties.EC_GROUP.split(';')[0];
-			if (this.config.longversion) {
-				var event = this.wordwrap(this.warnings[i].properties.DESCRIPTION, this.config.width, "<BR>");
-			} else {
-				var event = this.warnings[i].properties.EVENT;
-			}
-			var warnWrapper = document.createElement("div");
-			warnWrapper.className = 'warning';
-			var icon = document.createElement("div");
-			if (this.config.changeColor) {
-				iconColor = this.warnings[i].properties.EC_AREA_COLOR.replace(/ /g, ',');
-				icon.setAttribute('style', 'background-color: rgb(' + iconColor + ')');
-				icon.classList.add('weathericon', this.icons[type], 'small-icon');
-			} else {
-				icon.setAttribute('style', 'background-color: white');
-				icon.classList.add('weathericon', this.icons[type], 'small-icon');
-			}
-			var description = document.createElement("div");
-			description.className = 'description';
-			var headline = document.createElement("div");
-			headline.innerHTML = event;
-			var duration = document.createElement("div");
-			duration.className = 'duration';
-			duration.innerHTML = start + ' - ' + end;
-
-			var newLineSingleWarning = document.createElement("br");
-			var newLineMultipleWarning = document.createElement("br");
-
-			description.appendChild(headline);
-			description.appendChild(duration);
-			warnWrapper.appendChild(icon);
-			warnWrapper.appendChild(description);
-			wrapper.appendChild(warnWrapper);
-
-			wrapper.appendChild(newLineSingleWarning);
-			if (this.warnings.length > 1) {
-				wrapper.appendChild(newLineMultipleWarning);
-			}
-		}
-
-		//Log.info(wrapper);
-		return wrapper;
-	},
-
 	getHeader: function () {
 		if (this.warnings.length < 1 && this.config.hideNoWarning) {
 			if (this.data.header) return "";
@@ -192,21 +142,6 @@ Module.register("MMM-DWD-WarnWeather", {
 		} else {
 			return this.data.header;
 		}
-	},
-
-	wordwrap: function (str, width, brk) {
-
-		brk = brk || "n";
-		width = width || 75;
-
-		if (!str) {
-			return str;
-		}
-
-		var re = new RegExp(".{1," + width +
-			"}(\\s|$)|\\ S+?(\\s|$)", "g");
-
-		return str.match(RegExp(re)).join(brk);
 	},
 
 	pointInPoly: function (point, vs) {
@@ -220,7 +155,7 @@ Module.register("MMM-DWD-WarnWeather", {
 			var xi = vs[i][0], yi = vs[i][1];
 			var xj = vs[j][0], yj = vs[j][1];
 
-			var intersect = ((yi > y) != (yj > y))
+			var intersect = ((yi > y) !== (yj > y))
 				&& (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
 			if (intersect) inside = !inside;
 		}
@@ -233,7 +168,7 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		if (notification === 'WARNINGS_DATA') {
 			if (payload.community.hasOwnProperty('geometry')) {
-				if (payload.region == this.config.region || payload.region == this.config.warnCellID || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])) {
+				if (payload.region === this.config.region || payload.region === this.config.warnCellID || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])) {
 					Log.info(payload);
 					this.warnings = payload.warnings;
 					this.community = payload.community;

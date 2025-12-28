@@ -1,146 +1,81 @@
-.MMM-DWD-WarnWeather .wrapper {}
-.MMM-DWD-WarnWeather .hidden {
-    display: none;
-}
-.MMM-DWD-WarnWeather .displaytitle {
-	text-transform: uppercase;
-	font-size: 15px;
-	font-family: Roboto Condensed;
-	border-bottom: 1px solid #666;
-	line-height: 15px;
-	padding-bottom: 5px;
-	margin-bottom: 10px;
-	color: #999;
-}
-.MMM-DWD-WarnWeather .status {
-	color: #666;
-	width: auto;
-	font-size: 20px;
-	line-height: 25px;
-	text-align: left;
-}
-.MMM-DWD-WarnWeather .weathericon {
-	width: 256px;
-	height: 256px;
-	display: block;
-	background-color: #fff;
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
-}
-.MMM-DWD-WarnWeather .sprite-binnensee {
-	mask: url(icons/binnensee.svg);
-	-webkit-mask: url(icons/binnensee.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
-}
 .MMM-DWD-WarnWeather .sprite-frost {
 	mask: url(icons/frost.svg);
 	-webkit-mask: url(icons/frost.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .sprite-gewitter {
 	mask: url(icons/gewitter.svg);
 	-webkit-mask: url(icons/gewitter.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .sprite-glatteis {
 	mask: url(icons/glatteis.svg);
 	-webkit-mask: url(icons/glatteis.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .sprite-hitze {
 	mask: url(icons/hitze.svg);
 	-webkit-mask: url(icons/hitze.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .sprite-nebel {
 	mask: url(icons/nebel.svg);
 	-webkit-mask: url(icons/nebel.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .sprite-regen {
 	mask: url(icons/regen.svg);
 	-webkit-mask: url(icons/regen.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .sprite-schnee {
 	mask: url(icons/schnee.svg);
 	-webkit-mask: url(icons/schnee.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
-}
-.MMM-DWD-WarnWeather .sprite-sea {
-	mask: url(icons/sea.svg);
-	-webkit-mask: url(icons/sea.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
-}
-.MMM-DWD-WarnWeather .sprite-kueste {
-	mask: url(icons/kueste.svg);
-	-webkit-mask: url(icons/kueste.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .sprite-sturm {
 	mask: url(icons/sturm.svg);
 	-webkit-mask: url(icons/sturm.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .sprite-tauwetter {
 	mask: url(icons/tauwetter.svg);
 	-webkit-mask: url(icons/tauwetter.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .sprite-uv {
 	mask: url(icons/uv.svg);
 	-webkit-mask: url(icons/uv.svg);
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
+}
+.MMM-DWD-WarnWeather .hidden {
+  display: none;
+}
+.MMM-DWD-WarnWeather .status {
+  font-size: 20px;
+  line-height: 25px;
+  text-align: left;
+}
+.MMM-DWD-WarnWeather .weathericon {
+  width: 40px;
+  height: 40px;
+  display: block;
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
 }
 .MMM-DWD-WarnWeather .warning {
-	margin-bottom: -40px
-}
-.MMM-DWD-WarnWeather .small-icon {
-	float: left;
-	position: absolute;
-	zoom: .18;
-	-moz-transform: scale(.18);
-	/* Firefox */
-	-moz-transform-origin: 0 0;
-
+	display: grid;
+	grid-template-columns: 40px 1fr;
+	column-gap: 10px;
+	align-items: start;
+	margin-bottom: 12px;
 }
 .MMM-DWD-WarnWeather .description {
-	font-family: Roboto;
-	margin-left: 10px;
-	color: white;
-	padding-left: 50px;
-	padding-top: 3px;
-	color: #fff;
-	width: auto;
+	padding: 0;
 	font-size: 15px;
 	line-height: 20px;
 	text-align: left;
 }
-.MMM-DWD-WarnWeather .line {
-	width: 300px;
-}
-.MMM-DWD-WarnWeather hr {
-	width: 300px;
+.MMM-DWD-WarnWeather .headline {
+	white-space: normal;
+	overflow-wrap: anywhere;
+	word-break: break-word;
 }
 .MMM-DWD-WarnWeather .duration {
 	color: #999;
 }
 .MMM-DWD-WarnWeather br {
-	height: 0px;
-}
-.MMM-DWD-WarnWeather .black {
-	background-color: black;
+	height: 0;
 }
