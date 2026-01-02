@@ -1,0 +1,27 @@
+<div class="wrapper{% if hideWrapper %} hidden{% endif %}">
+  {% if config.displayInnerHeader %}
+    <header>
+      Wetterwarnungen{% if showRegionName %} für:<br>{{ communityName }}{% endif %}
+    </header>
+  {% endif %}
+
+  {% if locationNotFound %}
+    <div class="locationNotFound">Ort nicht gefunden</div>
+  {% endif %}
+
+  {% if status %}
+    <p class="status">{{ status }}</p>
+  {% endif %}
+
+  {% if warnings and warnings.length %}
+    {% for warning in warnings %}
+      <div class="warning">
+        <div class="weathericon {{ warning.iconClass }}" style="{{ warning.iconStyle }}"></div>
+        <div class="description">
+          <div class="headline bright"{% if warning.maxWidthCh %} style="max-width: {{ warning.maxWidthCh }}ch"{% endif %}>{{ warning.event }}</div>
+          <div class="duration">{{ warning.start }} - {{ warning.end }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>

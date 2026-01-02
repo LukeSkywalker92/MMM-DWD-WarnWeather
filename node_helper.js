@@ -26,23 +26,23 @@ module.exports = NodeHelper.create({
 
 		if (region.sevThres < 4) {
 			severityStr = severityStr + ",'Severe'";
-		};
+		}
 		if (region.sevThres < 3) {
 			severityStr = severityStr + ",'Moderate'";
-		};
+		}
 		if (region.sevThres < 2) {
 			severityStr = severityStr + ",'Minor'";
-		};
+		}
 
 		severityStr = encodeURIComponent(severityStr + ")");
-
+    var regionFilter;
 		if (region.lng) {
-			var regionFilter = encodeURIComponent("CONTAINS(THE_GEOM, POINT(" + region.lng + " " + region.lat + "))");
+			regionFilter = encodeURIComponent("CONTAINS(THE_GEOM, POINT(" + region.lng + " " + region.lat + "))");
 		}
 		else if (region.cellid) {
-			var regionFilter = encodeURIComponent("WARNCELLID=" + region.cellid);
+			regionFilter = encodeURIComponent("WARNCELLID=" + region.cellid);
 		} else {
-			var regionFilter = encodeURIComponent("AREADESC='" + region.reg + "'");
+			regionFilter = encodeURIComponent("AREADESC='" + region.reg + "'");
 		}
 
 		var communityData = [];
@@ -55,23 +55,23 @@ module.exports = NodeHelper.create({
 		// console.error(warnurl);
 
                 var requests = 2;
-		
+
 		//get name
 		fetch(nameurl, {
 			method: 'GET'
 		}).then(res => res.json()
 		).then(json => {
-			if (json.totalFeatures == 1) {
+			if (json.totalFeatures === 1) {
 				communityData = json.features[0];
 			}
-			if (--requests == 0) {
+			if (--requests === 0) {
 				if (region.reg)
 					callback(self, warningData, region.reg, communityData);
 				else if (region.cellid)
 					callback(self, warningData, region.cellid, communityData);
 			}
 		});
-		
+
 		//get warnings
 		fetch(warnurl, {
 			method: 'GET'
@@ -82,7 +82,7 @@ module.exports = NodeHelper.create({
 					warningData.push(json.features[i]);
 				}
 			}
-			if (--requests == 0) {
+			if (--requests === 0) {
 				if (region.reg)
 					callback(self, warningData, region.reg, communityData);
 				else if (region.cellid)
