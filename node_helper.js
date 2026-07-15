@@ -9,7 +9,9 @@
  */
 
 var NodeHelper = require('node_helper');
-const fetch = require('node-fetch');
+// Use the global fetch API (built in since Node.js 18). The old node-fetch@2
+// dependency breaks under Electron (used by MagicMirror) with a gzipped
+// response: "FetchError: Invalid response body ... Premature close".
 
 module.exports = NodeHelper.create({
 	start: function () {
