@@ -1,4 +1,4 @@
-/* Magic Mirror
+/* MagicMirror²
  * Module: MMM-DWD-WarnWeather
  *
  * By Luke Scheffler https://github.com/LukeSkywalker92
@@ -9,7 +9,6 @@
  */
 
 var NodeHelper = require('node_helper');
-const fetch = require('node-fetch');
 
 module.exports = NodeHelper.create({
 	start: function () {
@@ -35,7 +34,7 @@ module.exports = NodeHelper.create({
 		}
 
 		severityStr = encodeURIComponent(severityStr + ")");
-    var regionFilter;
+		var regionFilter;
 		if (region.lng) {
 			regionFilter = encodeURIComponent("CONTAINS(THE_GEOM, POINT(" + region.lng + " " + region.lat + "))");
 		}
@@ -54,16 +53,28 @@ module.exports = NodeHelper.create({
 		var warnurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warnungen_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' + regionFilter + severityStr;
 		// console.error(warnurl);
 
-                var requests = 2;
+		var requests = 2;
+
+		var fetchOptions = {
+			headers: {
+				'User-Agent': 'Mozilla/5.0 (MagicMirror) MMM-DWD-WarnWeather',
+				'Connection': 'close'
+			}
+		};
 
 		//get name
-		fetch(nameurl, {
-			method: 'GET'
-		}).then(res => res.json()
-		).then(json => {
-			if (json.totalFeatures === 1) {
+		fetch(nameurl, fetchOptions).then(response => response.json()).then(json => {
+			if (json && json.totalFeatures === 1) {
 				communityData = json.features[0];
 			}
+			if (--requests === 0) {
+				if (region.reg)
+					callback(self, warningData, region.reg, communityData);
+				else if (region.cellid)
+					callback(self, warningData, region.cellid, communityData);
+			}
+		}).catch(err => {
+			console.error("[MMM-DWD-WarnWeather] Error fetching nameurl:", err.message);
 			if (--requests === 0) {
 				if (region.reg)
 					callback(self, warningData, region.reg, communityData);
@@ -73,15 +84,20 @@ module.exports = NodeHelper.create({
 		});
 
 		//get warnings
-		fetch(warnurl, {
-			method: 'GET'
-		}).then(res => res.json()
-		).then(json => {
-			if (json.totalFeatures > 0) {
+		fetch(warnurl, fetchOptions).then(response => response.json()).then(json => {
+			if (json && json.totalFeatures > 0) {
 				for (var i = 0; i < json.totalFeatures; i++) {
 					warningData.push(json.features[i]);
 				}
 			}
+			if (--requests === 0) {
+				if (region.reg)
+					callback(self, warningData, region.reg, communityData);
+				else if (region.cellid)
+					callback(self, warningData, region.cellid, communityData);
+			}
+		}).catch(err => {
+			console.error("[MMM-DWD-WarnWeather] Error fetching warnurl:", err.message);
 			if (--requests === 0) {
 				if (region.reg)
 					callback(self, warningData, region.reg, communityData);

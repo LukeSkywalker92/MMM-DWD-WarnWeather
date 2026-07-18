@@ -1,7 +1,7 @@
 {
   "name": "mmm-dwd-warnweather",
   "version": "1.0.0",
-  "description": "bla",
+  "description": "A MagicMirror² module to display current weather warnings from Deutscher Wetterdienst (DWD) for regions in Germany.",
   "main": "MMM-DWD-WarnWeather.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,14 +11,24 @@
     "url": "git+https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "keywords": [
+    "magicmirror",
+    "smartmirror",
+    "weather",
+    "warnings",
+    "dwd"
+  ],
   "bugs": {
     "url": "https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather/issues"
   },
   "homepage": "https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather#readme",
   "dependencies": {
-    "request": "^2.78.0",
-    "node-fetch": "2.x"
+    "moment": "^2.30.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0"
+  }
 }

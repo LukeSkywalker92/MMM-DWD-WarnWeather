@@ -1,6 +1,6 @@
 /* global Module */
 
-/* Magic Mirror
+/* MagicMirror²
  * Module: MMM-DWD-WarnWeather
  *
  * By Luke Scheffler https://github.com/LukeSkywalker92
