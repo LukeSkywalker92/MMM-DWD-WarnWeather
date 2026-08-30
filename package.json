@@ -16,9 +16,6 @@
     "url": "https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather/issues"
   },
   "homepage": "https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather#readme",
-  "dependencies": {
-    "request": "^2.78.0",
-    "node-fetch": "2.x"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }
