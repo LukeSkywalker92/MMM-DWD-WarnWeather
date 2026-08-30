@@ -7,9 +7,7 @@ This a module for the [MagicMirror](https://github.com/MichMich/MagicMirror). It
 ![](https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather/blob/master/screenshot.png?raw=true)
 
 ## Installation
-1. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather.git`. A new folder will appear, navigate into it.
-2. Execute `npm install` to install the node dependencies.
-
+Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/LukeSkywalker92/MMM-DWD-WarnWeather.git`.
 
 
 ## Config
@@ -53,9 +51,6 @@ Here is an example of an entry in `config.js`
 	}
 },
 ```
-
-## Dependencies
-- [request](https://www.npmjs.com/package/request) (installed via `npm install`)
 
 ## Important Notes
 - This is my first project using Node, so feel free to submit pull requests or post on the issues/wiki and I will do my best to improve the project.
