@@ -38,9 +38,6 @@
 	mask: url(icons/uv.svg);
 	-webkit-mask: url(icons/uv.svg);
 }
-.MMM-DWD-WarnWeather .hidden {
-  display: none;
-}
 .MMM-DWD-WarnWeather .status {
   font-size: 20px;
   line-height: 25px;

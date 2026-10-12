@@ -48,23 +48,23 @@ Module.register("MMM-DWD-WarnWeather", {
 			config: this.config,
 			warnings: []
 		};
-		var communityName = null;
-		if (this.community && this.community.properties && this.community.properties.NAME) {
-			communityName = this.community.properties.NAME;
-		}
+		var communityName = this.communityName();
 		data.communityName = communityName;
 		data.showRegionName = this.config.displayRegionName && this.loaded && !!communityName;
-		data.locationNotFound = !this.community || !this.community.properties;
 
 		if (!this.loaded) {
 			data.status = this.config.loadingText;
 			return data;
 		}
 
+		// DWD answered, but found no single municipality for the region or cell
+		if (!communityName) {
+			data.status = "Ort nicht gefunden";
+			return data;
+		}
+
 		if (this.warnings.length < 1) {
-			if (this.config.hideNoWarning) {
-				data.hideWrapper = true;
-			} else if (this.config.severityThreshold < 2) {
+			if (this.config.severityThreshold < 2) {
 				data.status = this.config.noWarningText;
 			} else {
 				data.status = this.config.noWarningText + this.config.noWarningTextGreater + this.config.severityThreshold;
@@ -92,12 +92,17 @@ Module.register("MMM-DWD-WarnWeather", {
 
 		return data;
 	},
+	// The name of the municipality that DWD found for the region or cell, or null
+	communityName: function () {
+		return this.community && this.community.properties && this.community.properties.NAME || null;
+	},
 	// Define parameters at start
 	start: function () {
 		this.loaded = false;
 		this.noWarnings = false;
 		this.warnings = [];
 		this.community = [];
+		this.selfHidden = false;
 		this.icons = {
 			THUNDERSTORM: 'sprite-gewitter',
 			WIND: 'sprite-sturm',
@@ -135,12 +140,48 @@ Module.register("MMM-DWD-WarnWeather", {
 		setTimeout(self.updateWarnings, self.config.interval, self);
 	},
 
+	// No header while hideNoWarning hides the module, also not in the first
+	// frame before MODULE_DOM_CREATED
 	getHeader: function () {
-		if (this.warnings.length < 1 && this.config.hideNoWarning) {
-			if (this.data.header) return "";
-			else return "";
-		} else {
-			return this.data.header;
+		if (this.isEmpty()) {
+			return "";
+		}
+		return this.data.header;
+	},
+
+	// With hideNoWarning the module has nothing to show while it loads and while
+	// there is no warning. 'Ort nicht gefunden' is shown, so that a wrong region
+	// or cell is not hidden.
+	isEmpty: function () {
+		return this.config.hideNoWarning && (!this.loaded || (!!this.communityName() && this.warnings.length < 1));
+	},
+
+	// With hideNoWarning the module starts hidden, like the newsfeed with hideLoading
+	notificationReceived: function (notification) {
+		if (notification === "MODULE_DOM_CREATED" && this.isEmpty()) {
+			this.selfHidden = true;
+			this.hide(0, function () {}, { lockString: this.identifier });
+		}
+	},
+
+	// Shows new data. hideNoWarning uses MagicMirror's hide() and show(), so that
+	// the hidden module takes no space. The lockString keeps a hide by another
+	// module in force.
+	showData: function () {
+		var lock = { lockString: this.identifier };
+		if (this.isEmpty()) {
+			// The old content stays while the module fades out
+			if (!this.selfHidden) {
+				this.selfHidden = true;
+				this.hide(1000, function () {}, lock);
+			}
+			return;
+		}
+		// While the module is hidden, MagicMirror replaces the content at once
+		this.updateDom(1000);
+		if (this.selfHidden) {
+			this.selfHidden = false;
+			this.show(1000, function () {}, lock);
 		}
 	},
 
@@ -167,15 +208,18 @@ Module.register("MMM-DWD-WarnWeather", {
 		Log.info(notification);
 
 		if (notification === 'WARNINGS_DATA') {
-			if (payload.community.hasOwnProperty('geometry')) {
-				if (payload.region === this.config.region || payload.region === this.config.warnCellID || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])) {
-					Log.info(payload);
-					this.warnings = payload.warnings;
-					this.community = payload.community;
-					this.loaded = true;
-					this.noWarnings = false;
-					this.updateDom(1000);
-				}
+			// Without geometry DWD found no single municipality for the region or cell.
+			// Such an answer is accepted too, so that 'Ort nicht gefunden' is shown
+			// instead of the loading text forever.
+			var located = payload.community.hasOwnProperty('geometry');
+			if (payload.region === this.config.region || payload.region === this.config.warnCellID
+				|| (located && this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0]))) {
+				Log.info(payload);
+				this.warnings = payload.warnings;
+				this.community = payload.community;
+				this.loaded = true;
+				this.noWarnings = false;
+				this.showData();
 			}
 		}
 	}

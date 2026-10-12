@@ -1,12 +1,8 @@
-<div class="wrapper{% if hideWrapper %} hidden{% endif %}">
+<div class="wrapper">
   {% if config.displayInnerHeader %}
     <header>
       Wetterwarnungen{% if showRegionName %} für:<br>{{ communityName }}{% endif %}
     </header>
-  {% endif %}
-
-  {% if locationNotFound %}
-    <div class="locationNotFound">Ort nicht gefunden</div>
   {% endif %}
 
   {% if status %}
