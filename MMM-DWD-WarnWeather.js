@@ -144,31 +144,12 @@ Module.register("MMM-DWD-WarnWeather", {
 		}
 	},
 
-	pointInPoly: function (point, vs) {
-		// ray-casting algorithm based on
-		// http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-
-		var x = point[0], y = point[1];
-
-		var inside = false;
-		for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-			var xi = vs[i][0], yi = vs[i][1];
-			var xj = vs[j][0], yj = vs[j][1];
-
-			var intersect = ((yi > y) !== (yj > y))
-				&& (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-			if (intersect) inside = !inside;
-		}
-
-		return inside;
-	},
-
 	socketNotificationReceived: function (notification, payload) {
 		Log.info(notification);
 
 		if (notification === 'WARNINGS_DATA') {
 			if (payload.community.hasOwnProperty('geometry')) {
-				if (payload.region === this.config.region || payload.region === this.config.warnCellID || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])) {
+				if (payload.region === this.config.region || payload.region === this.config.warnCellID || payload.region === this.config.lat + "," + this.config.lng) {
 					Log.info(payload);
 					this.warnings = payload.warnings;
 					this.community = payload.community;

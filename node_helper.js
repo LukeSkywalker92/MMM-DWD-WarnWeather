@@ -48,13 +48,16 @@ module.exports = NodeHelper.create({
 		var communityData = [];
 		var warningData = [];
 
+		// In the municipalities the name is KURZNAME and the geometry SHAPE
 		var nameurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warngebiete_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' +
-			(regionFilter.includes("AREADESC") ? regionFilter.replace("AREADESC", "KURZNAME") : regionFilter);
+			regionFilter.replace("AREADESC", "KURZNAME").replace("THE_GEOM", "SHAPE");
 		// console.error(nameurl);
 		var warnurl = 'https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd:Warnungen_Gemeinden&outputFormat=application%2Fjson&CQL_FILTER=' + regionFilter + severityStr;
 		// console.error(warnurl);
 
                 var requests = 2;
+		// Sent back with the data, so that each module instance takes its own
+		var key = region.lng ? region.lat + "," + region.lng : region.cellid || region.reg;
 
 		//get name
 		fetch(nameurl, {
@@ -65,10 +68,7 @@ module.exports = NodeHelper.create({
 				communityData = json.features[0];
 			}
 			if (--requests === 0) {
-				if (region.reg)
-					callback(self, warningData, region.reg, communityData);
-				else if (region.cellid)
-					callback(self, warningData, region.cellid, communityData);
+				callback(self, warningData, key, communityData);
 			}
 		});
 
@@ -83,10 +83,7 @@ module.exports = NodeHelper.create({
 				}
 			}
 			if (--requests === 0) {
-				if (region.reg)
-					callback(self, warningData, region.reg, communityData);
-				else if (region.cellid)
-					callback(self, warningData, region.cellid, communityData);
+				callback(self, warningData, key, communityData);
 			}
 		});
 	},
