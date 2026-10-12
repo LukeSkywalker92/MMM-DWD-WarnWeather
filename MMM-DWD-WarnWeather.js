@@ -54,10 +54,16 @@ Module.register("MMM-DWD-WarnWeather", {
 		}
 		data.communityName = communityName;
 		data.showRegionName = this.config.displayRegionName && this.loaded && !!communityName;
-		data.locationNotFound = !this.community || !this.community.properties;
 
 		if (!this.loaded) {
 			data.status = this.config.loadingText;
+			return data;
+		}
+
+		// DWD answered, but found no single municipality for the region or cell.
+		// Checked before hideNoWarning, so that a wrong region or cell is not hidden.
+		if (!communityName) {
+			data.status = "Ort nicht gefunden";
 			return data;
 		}
 
@@ -167,15 +173,18 @@ Module.register("MMM-DWD-WarnWeather", {
 		Log.info(notification);
 
 		if (notification === 'WARNINGS_DATA') {
-			if (payload.community.hasOwnProperty('geometry')) {
-				if (payload.region === this.config.region || payload.region === this.config.warnCellID || this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0])) {
-					Log.info(payload);
-					this.warnings = payload.warnings;
-					this.community = payload.community;
-					this.loaded = true;
-					this.noWarnings = false;
-					this.updateDom(1000);
-				}
+			// Without geometry DWD found no single municipality for the region or cell.
+			// Such an answer is accepted too, so that 'Ort nicht gefunden' is shown
+			// instead of the loading text forever.
+			var located = payload.community.hasOwnProperty('geometry');
+			if (payload.region === this.config.region || payload.region === this.config.warnCellID
+				|| (located && this.pointInPoly([this.config.lng, this.config.lat], payload.community.geometry.coordinates[0]))) {
+				Log.info(payload);
+				this.warnings = payload.warnings;
+				this.community = payload.community;
+				this.loaded = true;
+				this.noWarnings = false;
+				this.updateDom(1000);
 			}
 		}
 	}
