@@ -42,13 +42,13 @@
   display: none;
 }
 .MMM-DWD-WarnWeather .status {
-  font-size: 20px;
-  line-height: 25px;
+  font-size: var(--font-size-small);
+  line-height: 1.25;
   text-align: left;
 }
 .MMM-DWD-WarnWeather .weathericon {
-  width: 40px;
-  height: 40px;
+  width: 2rem;
+  height: 2rem;
   display: block;
   mask-size: 100% 100%;
   mask-repeat: no-repeat;
@@ -57,15 +57,15 @@
 }
 .MMM-DWD-WarnWeather .warning {
 	display: grid;
-	grid-template-columns: 40px 1fr;
-	column-gap: 10px;
+	grid-template-columns: 2rem 1fr;
+	column-gap: 0.5rem;
 	align-items: start;
-	margin-bottom: 12px;
+	margin-bottom: 0.6rem;
 }
 .MMM-DWD-WarnWeather .description {
 	padding: 0;
-	font-size: 15px;
-	line-height: 20px;
+	font-size: var(--font-size-xsmall);
+	line-height: 1rem;
 	text-align: left;
 }
 .MMM-DWD-WarnWeather .headline {
@@ -74,7 +74,7 @@
 	word-break: break-word;
 }
 .MMM-DWD-WarnWeather .duration {
-	color: #999;
+	color: var(--color-text);
 }
 .MMM-DWD-WarnWeather br {
 	height: 0;
